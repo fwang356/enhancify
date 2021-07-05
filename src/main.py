@@ -3,9 +3,7 @@ import os
 import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
-
-cid = '91c9906120ee44bdb039a305efe5bbd1'
-secret = 'b1d12fe0c2264a0c9ce7ca3af96818e5'
+from client import cid, secret
 
 os.environ['SPOTIPY_CLIENT_ID'] = cid
 os.environ['SPOTIPY_CLIENT_SECRET'] = secret

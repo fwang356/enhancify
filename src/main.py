@@ -65,37 +65,60 @@ def average_mood():
 def recommendation(track):
     track_analysis = sp.audio_features(track)
 
-    danceability = track_analysis[0]['danceability']
-    energy = track_analysis[0]['energy']
-    valence = track_analysis[0]['valence']
-
     artist_id = sp.track(track)['artists'][0]['id']
     artists = [artist_id]
     tracks = [track]
     genre = sp.artist(artist_id)['genres']
+    if len(genre) > 3:
+        genre = genre[0:3]
+    elif len(genre) < 3:
+        artists.append(sp.artist_related_artists(artist_id)['artists'][0]['id'])
 
-    recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks, limit=20,
-                                     target_danceability=danceability, target_energy=energy,
-                                     target_valence=valence)
+    danceability = track_analysis[0]['danceability']
+    energy = track_analysis[0]['energy']
+    valence = track_analysis[0]['valence']
+    popularity = (sp.track(track)['popularity'] + sp.artist(artist_id)['popularity']) / 2
+    popularity = round(popularity)
+
+    recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks, limit=30,
+                                     min_danceability=max(danceability - .15, .01),
+                                     max_danceability=min(danceability + .15, .99),
+                                     min_energy=max(energy - .15, .01), max_energy=min(energy + .15, .99),
+                                     min_valence=max(valence - .15, .01), max_valence=min(valence + .15, .99),
+                                     min_popularity=max(popularity - 15, 1), max_popularity=min(popularity + 15, 99),)
+
     rec_tracks = []
-
-    for i in range(20):
+    for i in range(len(recommended['tracks'])):
         rec_tracks.append(recommended['tracks'][i]['id'])
+    rec_tracks = list(set(rec_tracks))
 
-    while track in rec_tracks:
+    if track in rec_tracks:
         rec_tracks.remove(track)
-        recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks, limit=1,
-                                         target_danceability=danceability, target_energy=energy,
-                                         target_valence=valence)
-        rec_tracks.append(recommended['tracks'][0]['id'])
 
+    count = 0.05
+    while len(rec_tracks) != 30:
+        recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks,
+                                         limit=30 - len(rec_tracks),
+                                         min_danceability=max(danceability - .15 - count, 0.01),
+                                         max_danceability=min(danceability + .15 + count, 0.99),
+                                         min_energy=max(energy - .15 - count, 0.01), max_energy=min(energy + .15 - count, 0.99),
+                                         min_valence=max(valence - .15 - count, 0.01),
+                                         max_valence=min(valence + .15 + count, 0.99),
+                                         min_popularity=max(popularity - 15 - int(count * 100), 1),
+                                         max_popularity=min(popularity + 15 + int(count * 100), 99))
+        for i in range(len(recommended['tracks'])):
+            rec_tracks.append(recommended['tracks'][i]['id'])
+        rec_tracks = list(set(rec_tracks))
+        if track in rec_tracks:
+            rec_tracks.remove(track)
+        count = count + 0.05
     return rec_tracks
 
 
-def rec_playlist(recs):
-    playlist = sp.user_playlist_create(sp.current_user()['id'], 'moodi recs')
+def rec_playlist(recs, track):
+    playlist = sp.user_playlist_create(sp.current_user()['id'], sp.track(track)['name'] + ' Recs')
     playlist_id = playlist['id']
-    sp.user_playlist_add_tracks(sp.current_user(), playlist_id, recs)
+    sp.playlist_add_items(playlist_id, recs)
 
 
 if token:
@@ -106,9 +129,9 @@ if token:
     if len(sys.argv) > 2:
         track_id = sys.argv[2]
         mood = get_mood([track_id])
-    recommendations = recommendation(top_tracks[0])
+    recommendations = recommendation('5XXJnC5TvcL2QsAZ3Nxgku')
     rec_analysis = get_mood(recommendations)
-    rec_playlist(recommendations)
+    rec_playlist(recommendations, '5XXJnC5TvcL2QsAZ3Nxgku')
 
 else:
     print("Can't get token for " + username)

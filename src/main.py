@@ -14,7 +14,7 @@ auth_manager = SpotifyClientCredentials(client_id=cid,
 sp = spotipy.Spotify(client_credentials_manager=auth_manager)
 
 username = ""
-scope = 'user-top-read'
+scope = 'user-top-read playlist-modify-public'
 token = util.prompt_for_user_token(username, scope)
 
 time_range = sys.argv[1]
@@ -35,8 +35,7 @@ def get_mood(tracks):
     moods = {}
     for i in range(len(tracks)):
         tracks_mood = {tracks[i]: {'danceability': track_analysis[i]['danceability'],
-                                   'energy': track_analysis[i]['energy'], 'valence': track_analysis[i]['valence'],
-                                   'tempo': track_analysis[i]['tempo']}}
+                                   'energy': track_analysis[i]['energy'], 'valence': track_analysis[i]['valence']}}
         moods.update(tracks_mood)
     return moods
 
@@ -48,20 +47,17 @@ def average_mood():
     danceability = 0
     energy = 0
     valence = 0
-    tempo = 0
 
     for track in track_analysis:
         danceability = danceability + track['danceability']
         energy = energy + track['energy']
         valence = valence + track['valence']
-        tempo = tempo + track['tempo']
 
     danceability = round(danceability / 10, 5)
     energy = round(energy / 10, 5)
     valence = round(valence / 10, 5)
-    tempo = round(tempo / 10, 5)
 
-    average = {'danceability': danceability, 'energy': energy, 'valence': valence, 'tempo': tempo}
+    average = {'danceability': danceability, 'energy': energy, 'valence': valence}
     return average
 
 
@@ -72,29 +68,34 @@ def recommendation(track):
     danceability = track_analysis[0]['danceability']
     energy = track_analysis[0]['energy']
     valence = track_analysis[0]['valence']
-    tempo = track_analysis[0]['tempo']
 
     artist_id = sp.track(track)['artists'][0]['id']
     artists = [artist_id]
     tracks = [track]
     genre = sp.artist(artist_id)['genres']
 
-    recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks, limit=10,
+    recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks, limit=20,
                                      target_danceability=danceability, target_energy=energy,
-                                     target_valence=valence, target_tempo=tempo)
+                                     target_valence=valence)
     rec_tracks = []
 
-    for i in range(10):
+    for i in range(20):
         rec_tracks.append(recommended['tracks'][i]['id'])
 
     while track in rec_tracks:
         rec_tracks.remove(track)
         recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks, limit=1,
                                          target_danceability=danceability, target_energy=energy,
-                                         target_valence=valence, target_tempo=tempo)
+                                         target_valence=valence)
         rec_tracks.append(recommended['tracks'][0]['id'])
 
     return rec_tracks
+
+
+def rec_playlist(recs):
+    playlist = sp.user_playlist_create(sp.current_user()['id'], 'moodi recs')
+    playlist_id = playlist['id']
+    sp.user_playlist_add_tracks(sp.current_user(), playlist_id, recs)
 
 
 if token:
@@ -107,7 +108,7 @@ if token:
         mood = get_mood([track_id])
     recommendations = recommendation(top_tracks[0])
     rec_analysis = get_mood(recommendations)
-    print(top_tracks)
-    print(rec_analysis)
+    rec_playlist(recommendations)
+
 else:
     print("Can't get token for " + username)

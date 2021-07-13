@@ -7,7 +7,7 @@ from client import cid, secret
 
 os.environ['SPOTIPY_CLIENT_ID'] = cid
 os.environ['SPOTIPY_CLIENT_SECRET'] = secret
-os.environ['SPOTIPY_REDIRECT_URI'] = 'http://localhost:8888/callback'
+os.environ['SPOTIPY_REDIRECT_URI'] = 'http://localhost:5000/callback'
 
 auth_manager = SpotifyClientCredentials(client_id=cid,
                                         client_secret=secret)
@@ -17,7 +17,7 @@ username = ""
 scope = 'user-top-read playlist-modify-public'
 token = util.prompt_for_user_token(username, scope)
 
-time_range = sys.argv[1]
+time_range = short_term
 
 
 # Returns list of user's top ten track id's

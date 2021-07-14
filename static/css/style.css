@@ -11,7 +11,7 @@ head, body, html {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    width: 650px;
+    width: 35%;
 }
 
 .form-control {
@@ -41,21 +41,21 @@ head, body, html {
 }
 
 h1{
-    font-size: 120px;
-    padding-top: 72px;
+    font-size: 7.5em;
+    padding-top: 5%;
 }
 
 h2{
     font-size: 24px;
-    padding-top: 180px;
-    padding-bottom: 10px;
+    padding-top: 30%;
+    padding-bottom: 2%;
 }
 
 
 h3{
     font-size: 24px;
     padding-top: 72px;
-    padding-bottom: 10px;
+    padding-bottom: 2%;
 }
 
 .form {

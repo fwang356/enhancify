@@ -32,9 +32,9 @@ def index():
         top_tracks = get_top_tracks()
     else:
         print("Can't get token for " + username)
-        return render_template('index.html')
+        return render_template('home.html')
 
-    return render_template("index.html", top_tracks=top_tracks, sp=sp)
+    return render_template("home.html", top_tracks=top_tracks, sp=sp)
 
 
 @app.route('/recs/<string:id>', methods=['GET', 'POST'])

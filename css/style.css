@@ -1,0 +1,67 @@
+head, body, html {
+    color: ivory;
+    background-color: #d1d1ff;
+    font-family: 'Lato', sans-serif;
+}
+
+.content {
+    margin: 0;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 35%;
+}
+
+.form-control {
+    border-radius: 70px;
+    border: 1.5px solid ivory;
+    width: 400px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    font-size: 0.95rem;
+    color: #aaa;
+    font-style: italic;
+}
+
+.btn-outline-light {
+    color: ivory;
+    border-color: ivory;
+    border-radius: 7px;
+}
+
+.btn-outline-light:hover {
+    color:#d1d1ff;
+}
+
+h1{
+    font-size: 7.5em;
+    padding-top: 5%;
+}
+
+h2{
+    font-size: 24px;
+    padding-top: 30%;
+    padding-bottom: 2%;
+}
+
+
+h3{
+    font-size: 24px;
+    padding-top: 72px;
+    padding-bottom: 2%;
+}
+
+.form {
+    margin-top: 20px;
+}
+
+#content {
+    width: 70%;
+}

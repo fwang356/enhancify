@@ -17,7 +17,7 @@ username = ""
 scope = 'user-top-read playlist-modify-public'
 token = util.prompt_for_user_token(username, scope)
 
-time_range = short_term
+time_range = "short_term"
 
 
 # Returns list of user's top ten track id's

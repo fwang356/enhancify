@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 os.environ['SPOTIPY_CLIENT_ID'] = cid
 os.environ['SPOTIPY_CLIENT_SECRET'] = secret
-os.environ['SPOTIPY_REDIRECT_URI'] = 'http://localhost:5000/callback'
+os.environ['SPOTIPY_REDIRECT_URI'] = 'http://localhost:8888/callback'
 
 auth_manager = SpotifyClientCredentials(client_id=cid,
                                         client_secret=secret)

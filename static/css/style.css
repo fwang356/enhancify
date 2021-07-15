@@ -11,7 +11,15 @@ head, body, html {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    width: 35%;
+}
+
+.btn-toolbar{
+    margin: 0;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .form-control {
@@ -30,32 +38,58 @@ head, body, html {
     font-style: italic;
 }
 
-.btn-outline-light {
+.btn-custom {
     color: ivory;
     border-color: ivory;
     border-radius: 7px;
 }
 
-.btn-outline-light:hover {
-    color:#d1d1ff;
+.btn-custom:hover {
+    background-color: ivory;
+    color: #d1d1ff;
+}
+
+.btn-custom:focus {
+    background-color: ivory;
+    color: #d1d1ff;
 }
 
 h1{
-    font-size: 7.5em;
-    padding-top: 5%;
+    font-size: 120px;
+    padding-top: 10%;
 }
 
 h2{
     font-size: 24px;
-    padding-top: 30%;
+    padding-top: 60%;
     padding-bottom: 2%;
 }
 
 
 h3{
     font-size: 24px;
-    padding-top: 72px;
+    padding-top: 6.5%;
     padding-bottom: 2%;
+}
+
+h4{
+    font-size: 36px;
+    padding-top: 1%;
+}
+
+.navbar-custom{
+    font-size: 48px;
+    background-color: #d1d1ff;
+    position: relative;
+    left: 5px;
+    top: 5px;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-test{
+    color: ivory;
+    font-size: 36px;
+    padding-left: 2%;
 }
 
 .form {

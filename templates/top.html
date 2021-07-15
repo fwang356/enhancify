@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block head%}
+<nav class="navbar navbar-custom", action="/">
+    <a class="navbar-brand" href="/">
+        moodi
+    </a>
+</nav>
+<h4 style="text-align: center">View Your Top Tracks</h4>
+{%endblock%}
+
+{% block body%}
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group mr-2" role="Group">
+        <button type="submit", class="btn btn-custom", action= "/top-tracks/" method="POST">
+            1 Month
+        </button>
+    </div>
+    
+    <div class="btn-group mr-2" role="Group">
+        <button type="submit", class="btn btn-custom", action= "/top-tracks/" method="POST">
+            6 Month
+        </button>
+    </div>
+
+    <div class="btn-group mr-2" role="Group">
+        <button type="submit", class="btn btn-custom", action= "/top-tracks/" method="POST">
+            All Time
+        </button>
+    </div>
+    </div>
+    
+
+    <!-- <table>
+
+        <tr>
+            <th>Name</th>
+            <th>Artist</th>
+            <th></th>
+        </tr>
+        {% for track in recs %}
+            <tr>
+                <td>{{ sp.track(track)['name'] }}</td>
+                <td>{{ sp.track(track)['artists'][0]['name'] }}</td>
+                <td>
+                    <a href="/recs/{{track}}">Similar Songs</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table> -->
+</div>
+{%endblock%}

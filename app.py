@@ -34,11 +34,13 @@ def index():
 
     return render_template("home.html", top_tracks=top_tracks, sp=sp)
 
+@app.route('/top-tracks/')
+def show_top_tracks():
+    return render_template('top.html')
 
-@app.route('/recs/<string:id>', methods=['GET', 'POST'])
-def recs(id):
-    recs = recommendation(id)
-    return render_template('recs.html', recs=recs, sp=sp)
+@app.route('/recs/')
+def recs():
+    return render_template('recs.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

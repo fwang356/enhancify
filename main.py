@@ -80,7 +80,7 @@ def recommendation(track):
     popularity = (sp.track(track)['popularity'] + sp.artist(artist_id)['popularity']) / 2
     popularity = round(popularity)
 
-    recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks, limit=30,
+    recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks, limit=20,
                                      min_danceability=max(danceability - .15, .01),
                                      max_danceability=min(danceability + .15, .99),
                                      min_energy=max(energy - .15, .01), max_energy=min(energy + .15, .99),
@@ -96,9 +96,9 @@ def recommendation(track):
         rec_tracks.remove(track)
 
     count = 0.05
-    while len(rec_tracks) != 30:
+    while len(rec_tracks) != 20:
         recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks,
-                                         limit=30 - len(rec_tracks),
+                                         limit=20 - len(rec_tracks),
                                          min_danceability=max(danceability - .15 - count, 0.01),
                                          max_danceability=min(danceability + .15 + count, 0.99),
                                          min_energy=max(energy - .15 - count, 0.01), max_energy=min(energy + .15 - count, 0.99),
@@ -115,10 +115,16 @@ def recommendation(track):
     return rec_tracks
 
 
-def rec_playlist(recs, track):
+def save_recs(rec, track):
     playlist = sp.user_playlist_create(sp.current_user()['id'], sp.track(track)['name'] + ' Recs')
     playlist_id = playlist['id']
-    sp.playlist_add_items(playlist_id, recs)
+    sp.playlist_add_items(playlist_id, rec)
+
+
+def save_top_tracks(tracks):
+    playlist = sp.user_playlist_create(sp.current_user()['id'], "Your Top Tracks")
+    playlist_id = playlist['id']
+    sp.playlist_add_items(playlist_id, tracks)
 
 
 if token:
@@ -129,9 +135,9 @@ if token:
     if len(sys.argv) > 2:
         track_id = sys.argv[2]
         mood = get_mood([track_id])
-    recommendations = recommendation('5XXJnC5TvcL2QsAZ3Nxgku')
-    rec_analysis = get_mood(recommendations)
-    rec_playlist(recommendations, '5XXJnC5TvcL2QsAZ3Nxgku')
+    recs = recommendation('5XXJnC5TvcL2QsAZ3Nxgku')
+    rec_analysis = get_mood(recs)
+    save_recs(recs, '5XXJnC5TvcL2QsAZ3Nxgku')
 
 else:
     print("Can't get token for " + username)

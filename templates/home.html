@@ -7,7 +7,11 @@
 {% block body%}
 <div style="text-align: center" class="content">
     <h2 style="text-align: center">Login to Access Your Personalized Listening Analysis</h2>
-    <button type="log-in-button", class="btn btn-outline-light">Login With Spotify</button>
+    <form action="/top-tracks/">
+        <button type="submit", class="btn btn-custom", action= "/top-tracks/">
+            Login With Spotify
+        </button>
+    </form>
     <br>
     <!-- <table>
 
@@ -30,9 +34,11 @@
     <form action="">
         <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
           <div class="input-group">
-            <input type="search" placeholder="Search for a Song" aria-describedby="search-button" class="form-control border-0 bg-light">
+            <input type="search" placeholder="Search for a Song" class="form-control border-0 bg-light">
             <div class="input-group-append">
-              <button id="search-button" type="submit" class="btn btn-link text-primary"><i class="fa fa-search" style="color:#d1d1ff"></i></button>
+                <form action="/recs/">
+                    <button id="search-button" type="submit" class="btn btn-link text-primary"><i class="fa fa-search" style="color:#d1d1ff"></i></button>
+                </form>
             </div>
           </div>
         </div>

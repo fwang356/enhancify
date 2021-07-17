@@ -1,8 +1,13 @@
 head, body, html {
-    color: ivory;
-    background-color: #d1d1ff;
+    color: #aaa;
+    background-color: snow;
     font-family: 'Lato', sans-serif;
     scroll-behavior: smooth;
+}
+
+body#home, html {
+    color: snow;
+    background: #d1d1ff;
 }
 
 .content {
@@ -14,12 +19,12 @@ head, body, html {
     position: relative;
     display: flex;
     justify-content: center;
-    margin-top: -10%;
+    margin-top: -9%;
 }
 
 .input-group .form-control {
     border-radius: 70px;
-    border: 1.5px solid ivory;
+    border: 1.5px solid snow;
 }
 
 .form-control::placeholder {
@@ -29,19 +34,34 @@ head, body, html {
 }
 
 .btn-custom {
-    color: ivory;
-    border-color: ivory;
+    color: snow;
+    border-color: snow;
     border-radius: 7px;
     border-radius: 20px;
 }
 
+.btn-custom-solid {
+    background-color: #d1d1ff;
+    color: snow;
+    border-color:#d1d1ff;
+    border-radius: 7px;
+    border-radius: 20px;
+    margin-bottom: 0px;
+    box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
+    font-size: 13px;
+}
+
+.btn-custom-solid:hover {
+    color: #aaa;
+}
+
 .btn-custom:hover {
-    background-color: ivory;
+    background-color: snow;
     color: #d1d1ff;
 }
 
 .btn-custom:focus {
-    background-color: ivory;
+    background-color: snow;
     color: #d1d1ff;
 }
 
@@ -65,7 +85,7 @@ h3{
 
 h4{
     font-size: 40px;
-    padding-top: 2.6%;
+    padding-top: 2%;
 }
 
 .btn-toolbar .btn-group{
@@ -79,14 +99,14 @@ h4{
 
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-test{
-    color: ivory;
+    color: snow;
     font-size: 28px;
     padding-left: 1%;
 }
 
 .card-deck .card {
-    background-color: ivory;
-    background-image: linear-gradient(-30deg, rgba(0, 118, 189, 0.1), transparent 70%);
+    background-color: snow;
+    background-image: linear-gradient(-30deg, rgba(0, 118, 189, 0.1), transparent 50%);
     margin: 1%;
     border-radius: 20px;
     opacity: 1;
@@ -124,7 +144,7 @@ h4{
 
 .card .btn-custom-solid {
     background-color: #d1d1ff;
-    color: ivory;
+    color: snow;
     border-color:#d1d1ff;
     border-radius: 7px;
     border-radius: 20px;

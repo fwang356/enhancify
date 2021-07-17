@@ -1,11 +1,17 @@
-{% extends "base.html" %}
-
-{% block head%}
-<h1 style="text-align: center"> moodi </h1>
-{%endblock%}
-
-{% block body%}
-<div style="text-align: center" class="content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Lato&display=swap'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href='https://use.fontawesome.com/releases/v5.7.2/css/all.css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <h1 style="text-align: center"> moodi </h1>
+</head>
+<body id="home">
+    <div style="text-align: center" class="content">
     <h2 style="text-align: center">Login to Access Your Personalized Listening Analysis</h2>
     <form action="/top-tracks/">
         <button type="submit", class="btn btn-custom", action= "/top-tracks/">
@@ -13,23 +19,6 @@
         </button>
     </form>
     <br>
-    <!-- <table>
-
-        <tr>
-            <th>Name</th>
-            <th>Artist</th>
-            <th></th>
-        </tr>
-        {% for track in top_tracks %}
-            <tr>
-                <td>{{ sp.track(track)['name'] }}</td>
-                <td>{{ sp.track(track)['artists'][0]['name'] }}</td>
-                <td>
-                    <a href="/recs/{{track}}">Similar Songs</a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table> -->
     <h3>Search for a Song to View its Audio Features and Similar Songs</h3>
     <form action="">
         <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
@@ -44,4 +33,18 @@
         </div>
     </form>
 </div>
+</body>
+</html>
+
+
+
+
+{% extends "base.html" %}
+
+{% block head%}
+
+{%endblock%}
+
+{% block body%}
+
 {%endblock%}

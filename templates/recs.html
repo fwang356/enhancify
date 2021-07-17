@@ -1,13 +1,84 @@
 {% extends "base.html" %}
 
 {% block head%}
-
+<nav class="navbar navbar-custom", action="/">
+    <a class="navbar-brand" href="/">
+        moodi
+    </a>
+</nav>
 {%endblock%}
 
 {% block body%}
-<div class="content">
-    <h1 style="text-align: center"> moodi </h1>
-    <h2 style="text-align: center">Similar Songs</h2>
+
+<section class="" id="tracks">
+    <div class="container h-100 pt-5">
+        <div class="row">
+            <div class="col-10 offset-1">
+                <h4 style= "text-align: center;">
+                    Don't Know What To Do
+                    <h5 style= "text-align: center;">
+                        by BLACKPINK
+                    </h5>
+                </h4>
+                <br>
+                <div>
+                    <img class="album" src= https://i.scdn.co/image/ab67616d0000b273e20e5c366b497518353497b0>
+                </div>
+                <h4>
+                    Songs You'll Love
+                    <button type="submit", class="btn btn-custom-solid", action= "/recs/", id="save">
+                        Save as a Playlist
+                    </button>
+                </h4>
+                
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-10 offset-1">
+                {% for i in range(5) %}
+                <div class="card-deck">
+                    <div class="card">
+                        <a class="img_link" href=https://open.spotify.com/track/38SKB7UfhL6Sd6Joxex5yK>
+                            <img class="card-img" src= https://i.scdn.co/image/ab67616d0000b273e20e5c366b497518353497b0>     
+                        </a>
+                        <div class="card-body">
+                            <h5>1. Don't Know What To Do</h5>
+                            <small>By BLACKPINK</small>
+                            <br>
+                            <br>
+                            <br>
+                            <form action="/recs/">
+                                <button type="submit", class="btn btn-custom-solid", action= "/recs/">
+                                    View an Audio Analysis and Similar Songs
+                                </button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                    <div class="card">
+                        <a class="img_link" href=https://open.spotify.com/track/38SKB7UfhL6Sd6Joxex5yK>
+                            <img class="card-img" src= https://i.scdn.co/image/ab67616d0000b273e20e5c366b497518353497b0>     
+                        </a>
+                        <div class="card-body">
+                            <h5>2. Don't Know What To Do</h5>
+                            <small>By BLACKPINK</small>
+                            <br>
+                            <br>
+                            <br>
+                            <form action="/recs/">
+                                <button type="submit", class="btn btn-custom-solid", action= "/recs/">
+                                    View an Audio Analysis and Similar Songs
+                                </button>
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+</div>
     <!--<table>
 
         <tr>
@@ -25,5 +96,5 @@
             </tr>
         {% endfor %}
     </table>-->
-</div>
+
 {%endblock%}

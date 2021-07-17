@@ -1,13 +1,15 @@
 head, body, html {
-    color: #aaa;
-    background-color: snow;
+    color: #d1d1ff;
+    background-color: #242336;
     font-family: 'Lato', sans-serif;
+    font-weight: 300;
     scroll-behavior: smooth;
 }
 
 body#home, html {
-    color: snow;
-    background: #d1d1ff;
+    color: d1d1ff;
+    background: #242336;
+    font-weight: 300;
 }
 
 .content {
@@ -34,15 +36,15 @@ body#home, html {
 }
 
 .btn-custom {
-    color: snow;
-    border-color: snow;
+    color: #d1d1ff;
+    border-color: #d1d1ff;
     border-radius: 7px;
     border-radius: 20px;
 }
 
 .btn-custom-solid {
     background-color: #d1d1ff;
-    color: snow;
+    color: #242336;
     border-color:#d1d1ff;
     border-radius: 7px;
     border-radius: 20px;
@@ -56,8 +58,8 @@ body#home, html {
 }
 
 .btn-custom:hover {
-    background-color: snow;
-    color: #d1d1ff;
+    background-color: #d1d1ff;
+    color: #242336;
 }
 
 .btn-custom:focus {
@@ -99,13 +101,13 @@ h4{
 
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-test{
-    color: snow;
+    color: #242336;
     font-size: 28px;
     padding-left: 1%;
 }
 
 .card-deck .card {
-    background-color: snow;
+    background-color: #414063;
     background-image: linear-gradient(-30deg, rgba(0, 118, 189, 0.1), transparent 50%);
     margin: 1%;
     border-radius: 20px;
@@ -132,19 +134,14 @@ h4{
     display: contents;
 }
 
-.card h5 {
-    font-size: 22px;
-    color: #aaa;
-}
-
 .card small {
-    color: #aaa; 
+    color: #d1d1ff; 
     font-size: 13px;
 }
 
 .card .btn-custom-solid {
     background-color: #d1d1ff;
-    color: snow;
+    color: #242336;
     border-color:#d1d1ff;
     border-radius: 7px;
     border-radius: 20px;
@@ -156,4 +153,9 @@ h4{
 
 .card .btn-custom-solid:hover {
     transform: scale(1.07);
+}
+
+.album {
+    width: 200px;
+    height: 200px;
 }

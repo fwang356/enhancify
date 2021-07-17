@@ -126,6 +126,23 @@ def save_top_tracks(tracks):
     playlist_id = playlist['id']
     sp.playlist_add_items(playlist_id, tracks)
 
+"""
+def get_track_name(track):
+    return sp.track(track)['name']
+
+
+def get_artist_name(track):
+    return sp.track(track)['artists'][0]['name']
+
+
+def get_album_cover(track):
+    return sp.track(track)['album']['images'][0]['url']
+"""
+
+
+def get_user_pfp():
+    return sp.current_user()['images'][0]['url']
+
 
 if token:
     sp = spotipy.Spotify(auth=token)
@@ -135,9 +152,10 @@ if token:
     if len(sys.argv) > 2:
         track_id = sys.argv[2]
         mood = get_mood([track_id])
-    recs = recommendation('5XXJnC5TvcL2QsAZ3Nxgku')
-    rec_analysis = get_mood(recs)
-    save_recs(recs, '5XXJnC5TvcL2QsAZ3Nxgku')
 
+    print(get_user_pfp())
+    #recs = recommendation('5XXJnC5TvcL2QsAZ3Nxgku')
+    #rec_analysis = get_mood(recs)
+    #save_top_tracks(top_tracks)
 else:
     print("Can't get token for " + username)

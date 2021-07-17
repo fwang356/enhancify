@@ -5,9 +5,10 @@ import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
 from client import cid, secret
-from main import get_top_tracks, recommendation
+# from main import get_album_cover, get_artist_name, get_mood, get_track_name, get_top_tracks
 
 app = Flask(__name__)
+
 
 os.environ['SPOTIPY_CLIENT_ID'] = cid
 os.environ['SPOTIPY_CLIENT_SECRET'] = secret
@@ -23,16 +24,20 @@ token = util.prompt_for_user_token(username, scope)
 
 time_range = "short_term"
 
+"""
+if token:
+    sp = spotipy.Spotify(auth=token)
+    top_tracks = get_top_tracks()
+    tracks = get_names(top_tracks)
+    artists = get_artist_names(top_tracks)
+    album_covers = get_album_covers(top_tracks)
+else:
+    print("Can't get token for " + username)
+"""
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    if token:
-        sp = spotipy.Spotify(auth=token)
-        top_tracks = get_top_tracks()
-    else:
-        print("Can't get token for " + username)
-        return render_template('home.html')
-
-    return render_template("home.html", top_tracks=top_tracks, sp=sp)
+    return render_template("home.html")
 
 @app.route('/top-tracks/')
 def show_top_tracks():

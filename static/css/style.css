@@ -6,12 +6,6 @@ head, body, html {
     scroll-behavior: smooth;
 }
 
-body#home, html {
-    color: d1d1ff;
-    background: #242336;
-    font-weight: 300;
-}
-
 .content {
     margin: auto;
     width: 50%;

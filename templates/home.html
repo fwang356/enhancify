@@ -14,17 +14,52 @@
     </form>
     <br>
     <h3>Search for a Song to View its Audio Features and Similar Songs</h3>
-    <form action="">
-        <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
-          <div class="input-group">
-            <input type="search" placeholder="Search for a Song" class="form-control border-0 bg-light">
-            <div class="input-group-append">
-                <form action="/recs/">
-                    <button id="search-button" type="submit" class="btn btn-link text-primary"><i class="fa fa-search" style="color:#d1d1ff"></i></button>
-                </form>
+    <div class="container">
+        <div class="wrapper">
+            <input type="text" name="search" id="search" placeholder="Search for a song" autocomplete="chrome-off">
+            <div class="search-btn">
+                <button><i class="fa fa-search"></i></button>
             </div>
-          </div>
+            <div class="results">
+            </div>
         </div>
-    </form>
+    </div>
+    <script src="../js/script.js"></script>
+    <script>
+        let searchable = [
+            "Don't Know What To Do - BLACKPINK",
+            "Door (Your Moon) - Jeong Sewoon"
+        ];
+
+        const searchInput = document.getElementById('search');
+        const searchWrapper = document.querySelector('.wrapper');
+        const resultsWrapper = document.querySelector('.results');
+
+        searchInput.addEventListener('keyup', () => {
+        let results = [];
+        let input = searchInput.value;
+        if (input.length > 0) {
+            results = searchable.filter((item) => {
+            return item.toLowerCase().includes(input.toLowerCase());
+            });
+        }
+        renderResults(results);
+        });
+
+        function renderResults(results) {
+        if (results.length == 0) {
+            return searchWrapper.classList.remove('show');
+        }
+
+        const content = results
+            .map((item) => {
+            return `<li>${item}</li>`;
+            })
+            .join('');
+
+        searchWrapper.classList.add('show');
+        resultsWrapper.innerHTML = `<ul>${content}</ul>`;
+        }
+    </script>
 </div>
 {%endblock%}

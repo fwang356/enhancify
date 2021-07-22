@@ -144,6 +144,10 @@ def get_user_pfp():
     return sp.current_user()['images'][0]['url']
 
 
+
+def search(query):
+    return sp.search(query, limit)
+
 if token:
     sp = spotipy.Spotify(auth=token)
     top_tracks = get_top_tracks()

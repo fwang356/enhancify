@@ -6,11 +6,6 @@ head, body, html {
     scroll-behavior: smooth;
 }
 
-.content {
-    margin: auto;
-    width: 50%;
-}
-
 .btn-toolbar {
     position: relative;
     display: flex;
@@ -31,7 +26,6 @@ head, body, html {
     border-color:#d1d1ff;
     border-radius: 7px;
     border-radius: 20px;
-    margin-bottom: 0px;
     box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
     font-size: 13px;
 }
@@ -57,15 +51,15 @@ h1{
 
 h2{
     font-size: 24px;
-    padding-top: 7%;
-    padding-bottom: 2%;
+    padding-top: 4%;
+    padding-bottom: 1%;
 }
 
 
 h3{
     font-size: 24px;
-    padding-top: 4%;
-    padding-bottom: 2%;
+    padding-top: 2%;
+    padding-bottom: 1%;
 }
 
 h4{
@@ -228,3 +222,15 @@ input:focus {
 .results ul li:hover {
     background: #ececec
 }
+
+svg {
+    display: block;
+    margin: auto;
+}
+
+#my_dataviz {
+    margin: auto;
+    width: 50%;
+    display: inline-block;
+}
+

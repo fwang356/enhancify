@@ -17,11 +17,8 @@ username = ""
 scope = 'user-top-read playlist-modify-public'
 token = util.prompt_for_user_token(username, scope)
 
-time_range = "short_term"
-
-
 # Returns list of user's top ten track id's
-def get_top_tracks():
+def get_top_tracks(time_range):
     results = sp.current_user_top_tracks(limit=10, offset=0, time_range=time_range)
     tracks = []
     for song in range(10):
@@ -29,36 +26,14 @@ def get_top_tracks():
     return tracks
 
 
-# Returns list of moods for inputted tracks
-def get_mood(tracks):
-    track_analysis = sp.audio_features(tracks)
+# Returns list of moods for inputted track
+def get_mood(track):
+    track_analysis = sp.audio_features(track)
     moods = {}
-    for i in range(len(tracks)):
-        tracks_mood = {tracks[i]: {'danceability': track_analysis[i]['danceability'],
-                                   'energy': track_analysis[i]['energy'], 'valence': track_analysis[i]['valence']}}
-        moods.update(tracks_mood)
+    tracks_mood = {'danceability': round(100 * track_analysis[0]['danceability']),
+                    'energy': round(100 * track_analysis[0]['energy']), 'valence': round(100 * track_analysis[0]['valence'])}
+    moods.update(tracks_mood)
     return moods
-
-
-# Returns average mood for user's top tracks
-def average_mood():
-    tracks = get_top_tracks()
-    track_analysis = sp.audio_features(tracks)
-    danceability = 0
-    energy = 0
-    valence = 0
-
-    for track in track_analysis:
-        danceability = danceability + track['danceability']
-        energy = energy + track['energy']
-        valence = valence + track['valence']
-
-    danceability = round(danceability / 10, 5)
-    energy = round(energy / 10, 5)
-    valence = round(valence / 10, 5)
-
-    average = {'danceability': danceability, 'energy': energy, 'valence': valence}
-    return average
 
 
 # Returns list of recommended tracks based on inputted track
@@ -85,7 +60,7 @@ def recommendation(track):
                                      max_danceability=min(danceability + .15, .99),
                                      min_energy=max(energy - .15, .01), max_energy=min(energy + .15, .99),
                                      min_valence=max(valence - .15, .01), max_valence=min(valence + .15, .99),
-                                     min_popularity=max(popularity - 15, 1), max_popularity=min(popularity + 15, 99),)
+                                     min_popularity=max(popularity - 15, 1), max_popularity=min(popularity + 15, 99))
 
     rec_tracks = []
     for i in range(len(recommended['tracks'])):
@@ -121,28 +96,10 @@ def save_recs(rec, track):
     sp.playlist_add_items(playlist_id, rec)
 
 
-def save_top_tracks(tracks):
-    playlist = sp.user_playlist_create(sp.current_user()['id'], "Your Top Tracks")
+def save_top_tracks(tracks, time_range):
+    playlist = sp.user_playlist_create(sp.current_user()['id'], "Your Top Tracks " + time_range)
     playlist_id = playlist['id']
     sp.playlist_add_items(playlist_id, tracks)
-
-"""
-def get_track_name(track):
-    return sp.track(track)['name']
-
-
-def get_artist_name(track):
-    return sp.track(track)['artists'][0]['name']
-
-
-def get_album_cover(track):
-    return sp.track(track)['album']['images'][0]['url']
-"""
-
-
-def get_user_pfp():
-    return sp.current_user()['images'][0]['url']
-
 
 
 def search(query):
@@ -150,16 +107,5 @@ def search(query):
 
 if token:
     sp = spotipy.Spotify(auth=token)
-    top_tracks = get_top_tracks()
-    tracks_analysis = get_mood(top_tracks)
-    average_mood = average_mood()
-    if len(sys.argv) > 2:
-        track_id = sys.argv[2]
-        mood = get_mood([track_id])
-
-    print(get_user_pfp())
-    #recs = recommendation('5XXJnC5TvcL2QsAZ3Nxgku')
-    #rec_analysis = get_mood(recs)
-    #save_top_tracks(top_tracks)
 else:
     print("Can't get token for " + username)

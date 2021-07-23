@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-<script src="https://d3js.org/d3.v4.js"></script>
 
 {% block head%}
 <nav class="navbar navbar-custom", action="/">
@@ -8,127 +7,71 @@
     </a>
 </nav>
 <h4 style= "text-align: center;">
-    Don't Know What To Do
+    {{ sp.track(track)['name'] }}
     <h5 style= "text-align: center;">
-        by BLACKPINK
+        by {{ sp.track(track)['artists'][0]['name'] }}
+    </h5>
+    <br>
+    <h5 style= "text-align: center;">
+        Danceability: {{ mood['danceability'] }} &nbsp;&nbsp; Valence: {{ mood['valence'] }} &nbsp;&nbsp;  Energy: {{ mood['energy'] }}
+
     </h5>
 </h4>
 {%endblock%}
 
 {% block body%}
-<div id="my_dataviz"></div>
-<script>
-// set the dimensions and margins of the graph
-var margin = {top: 10, right: 30, bottom: 90, left: 40},
-    width = 460 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-// append the svg object to the body of the page
-var svg = d3.select("#my_dataviz")
-  .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
-
-// Parse the Data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv", function(data) {
-
-// X axis
-var x = d3.scaleBand()
-  .range([ 0, width ])
-  .domain(data.map(function(d) { return d.Country; }))
-  .padding(1);
-svg.append("g")
-  .attr("transform", "translate(0," + height + ")")
-  .call(d3.axisBottom(x))
-  .selectAll("text")
-    .attr("transform", "translate(-10,0)rotate(-45)")
-    .style("text-anchor", "end");
-
-// Add Y axis
-var y = d3.scaleLinear()
-  .domain([0, 13000])
-  .range([ height, 0]);
-svg.append("g")
-  .call(d3.axisLeft(y));
-
-// Lines
-svg.selectAll("myline")
-  .data(data)
-  .enter()
-  .append("line")
-    .attr("x1", function(d) { return x(d.Country); })
-    .attr("x2", function(d) { return x(d.Country); })
-    .attr("y1", function(d) { return y(d.Value); })
-    .attr("y2", y(0))
-    .attr("stroke", "grey")
-
-// Circles
-svg.selectAll("mycircle")
-  .data(data)
-  .enter()
-  .append("circle")
-    .attr("cx", function(d) { return x(d.Country); })
-    .attr("cy", function(d) { return y(d.Value); })
-    .attr("r", "4")
-    .style("fill", "#69b3a2")
-    .attr("stroke", "black")
-})
-
-</script>
 
 <section class="" id="tracks">
     <div class="container h-100 pt-5">
-        <div class="row">
-            <div class="col-10 offset-1">
-                <!--<div>
-                    <img class="album" src= https://i.scdn.co/image/ab67616d0000b273e20e5c366b497518353497b0>
-                </div>-->
+        <div class="row mt-2">
+            <div class="col-10 offset-1">  
+                <div id="my_dataviz"></div>
                 <h4>
-                    Songs You'll Love
-                    <button type="submit", class="btn btn-custom", action= "/recs/", id="save">
+                    Recommendations
+                    <form method='POST' action = '/save-recs/' style='display: inline;'>
+                        <button type="submit", class="btn btn-custom", action= "/save-recs/", name = "save",  value="{{ recs|join('') + track }}">
                         Save as a Playlist
                     </button>
+                    </form>
                 </h4>
                 
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-10 offset-1">
-                {% for i in range(5) %}
+                {% for i in range(10) %}
+                {% set count = (loop.index - 1) * 2 %}
                 <div class="card-deck">
                     <div class="card">
-                        <a class="img_link" href=https://open.spotify.com/track/38SKB7UfhL6Sd6Joxex5yK>
-                            <img class="card-img" src= https://i.scdn.co/image/ab67616d0000b273e20e5c366b497518353497b0>     
+                        <a class="img_link" href="{{ sp.track(recs[count])['external_urls']['spotify'] }}">
+                            <img class="card-img" src= "{{sp.track(recs[count])['album']['images'][0]['url']}}">     
                         </a>
                         <div class="card-body">
-                            <h5>1. Don't Know What To Do</h5>
-                            <small>By BLACKPINK</small>
+                            <h5>{{count + 1}}. {{ sp.track(recs[count])['name'] }}</h5>
+                            <small>By {{ sp.track(recs[count])['artists'][0]['name'] }}</small>
                             <br>
                             <br>
                             <br>
                             <form action="/recs/">
-                                <button type="submit", class="btn btn-custom-solid", action= "/recs/">
+                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ recs[count] }}", action= "/recs/">
                                     Audio Analysis and Similar Songs
                                 </button>
                             </form>
                         </div>
-                        
+                    {% set count = count + 1%}
                     </div>
                     <div class="card">
-                        <a class="img_link" href=https://open.spotify.com/track/38SKB7UfhL6Sd6Joxex5yK>
-                            <img class="card-img" src= https://i.scdn.co/image/ab67616d0000b273e20e5c366b497518353497b0>     
+                        <a class="img_link" href="{{ sp.track(recs[count])['external_urls']['spotify'] }}">
+                            <img class="card-img" src= "{{sp.track(recs[count])['album']['images'][0]['url']}}">     
                         </a>
                         <div class="card-body">
-                            <h5>2. Don't Know What To Do</h5>
-                            <small>By BLACKPINK</small>
+                            <h5>{{count + 1}}. {{ sp.track(recs[count])['name'] }}</h5>
+                            <small>By {{ sp.track(recs[count])['artists'][0]['name'] }}</small>
                             <br>
                             <br>
                             <br>
                             <form action="/recs/">
-                                <button type="submit", class="btn btn-custom-solid", action= "/recs/">
+                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ recs[count] }}", action= "/recs/">
                                     Audio Analysis and Similar Songs
                                 </button>
                             </form> 
@@ -158,5 +101,75 @@ svg.selectAll("mycircle")
             </tr>
         {% endfor %}
     </table>-->
+<script>
+const data = [
+    {name: 'Danceability', score: 50 },
+    {name: 'Valence', score: 30 },
+    {name: 'Energy', score: 40 },
+];
+        
+        
+var margin = {top: 10, right: 20, bottom: 40, left: 250},
+width = 650 - margin.left - margin.right,
+height = 300 - margin.top - margin.bottom;
 
+var svg = d3.select("#my_dataviz").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .attr("viewBox", [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom], preserveAspectRatio="xMaxYMax meet")
+    .append("g")
+    .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+        
+var x = d3.scaleLinear()
+    .domain([0, 100])
+    .range([ 0, width]);
+svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .selectAll("text")
+    .attr("transform", "translate(-10,0)rotate(-45)")
+    .style("text-anchor", "end");
+        
+var y = d3.scaleBand()
+    .range([ 0, height ]) 
+    .domain(data.map(function(d) { return d.name; }))
+    .padding(1);
+svg.append("g")
+    .call(d3.axisLeft(y))
+    .style("font", "16px Lato")
+        
+svg.selectAll("myline")
+    .data(data)
+    .enter()
+    .append("line")
+        .attr("x1", x(0))
+        .attr("x2", x(0))
+        .attr("y1", function(d) { return y(d.name); })
+        .attr("y2", function(d) { return y(d.name); })
+        .attr("stroke", "#d1d1ff")
+        .style("stroke-width", 3)
+
+svg.selectAll("mycircle")
+    .data(data)
+    .enter()
+    .append("circle")
+        .attr("cx", x(0))
+        .attr("cy", function(d) { return y(d.name); })
+        .attr("r", "8")
+        .style("fill", "#d1d1ff")
+        .attr("stroke", "#d1d1ff")
+        .style("stroke-width", 1)
+
+svg.selectAll("circle")
+    .transition()
+    .duration(1500)
+    .attr("cx", function(d) {return x(d.score); })
+    
+svg.selectAll("line")
+    .transition()
+    .duration(1500)
+    .attr("x1", function(d) {return x(d.score); })
+
+</script>
 {%endblock%}

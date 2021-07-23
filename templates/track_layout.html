@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block head%}
+
+{%endblock%}
+
+{% block body%}
+<section class="" id="top_tracks">
+    <div class="container h-100 pt-5">
+        <div class="row mt-2">
+            <div class="col-10 offset-1">
+                <h4>
+                    <img class="pfp" src= "{{ sp.current_user()['images'][0]['url'] }}">
+                    Your Top Songs
+                    <form method='POST' style='display: inline;'>
+                        <button type="submit", class="btn btn-custom", name= "save", id="save_top_tracks", value="save_top_tracks">
+                            Save as a Playlist
+                        </button>
+                    </form>
+                </h4>           
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-10 offset-1">
+                {% for i in range(5) %}
+                {% set count = (loop.index - 1) * 2 %}
+                <div class="card-deck">
+                    <div class="card">
+                        <a class="img_link" href="{{ sp.track(top_tracks[count])['external_urls']['spotify'] }}">
+                            <img class="card-img" src= "{{sp.track(top_tracks[count])['album']['images'][0]['url']}}">     
+                        </a>
+                        <div class="card-body">
+                            <h5>{{count + 1}}. {{ sp.track(top_tracks[count])['name'] }}</h5>
+                            <small>By {{ sp.track(top_tracks[count])['artists'][0]['name'] }}</small>
+                            <br>
+                            <br>
+                            <br>
+                            <form method="POST" action="/recs/">
+                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ top_tracks[count] }}", action= "/recs/">
+                                    Audio Analysis and Similar Songs
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% set count = count + 1 %}
+                    <div class="card">
+                        <a class="img_link" href="{{ sp.track(top_tracks[count])['external_urls']['spotify'] }}">
+                            <img class="card-img" src= "{{sp.track(top_tracks[count])['album']['images'][0]['url']}}">     
+                        </a>
+                        <div class="card-body">
+                            <h5>{{count + 1}}. {{ sp.track(top_tracks[count])['name'] }}</h5>
+                            <small>By {{ sp.track(top_tracks[count])['artists'][0]['name'] }}</small>
+                            <br>
+                            <br>
+                            <br>
+                            <form method="POST" action="/recs/">
+                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ top_tracks[count] }}", action= "/recs/">
+                                    Audio Analysis and Similar Songs
+                                </button>
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}

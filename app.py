@@ -171,6 +171,8 @@ def search():
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
     if request.method == 'POST':
+        if request.form['search'] == '':
+            return ('', 204)
         query = request.form['search']
         results = search_track(query, sp)
     return render_template('search.html', sp=sp, results=results, query=query)

@@ -43,8 +43,12 @@
         <div class="row mt-2">
             <div class="col-10 offset-1">
                 <h4>
-                    <img class="pfp" src= "{{ sp.current_user()['images'][0]['url'] }}">
-                    Your Top Songs
+                    {% if sp.current_user == None %}
+                        <img class="pfp" src= "{{ sp.current_user()['images'][0]['url'] }}">
+                        Your Top Songs
+                    {% else %}
+                        Your Top Songs
+                    {% endif %}
                     <form method='POST' action = '/save-top-tracks/', style='display: inline;'>
                         <button type="submit", action = '/save-top-tracks/', class="btn btn-custom", name= "save", id="save_top_tracks", value="save_long_top_tracks">
                             Save as a Playlist
@@ -55,7 +59,9 @@
         </div>
         <div class="row mt-2">
             <div class="col-10 offset-1">
-                {% for i in range(5) %}
+                {% set length = top_tracks | length %}
+                {% set length = (length / 2) | int %}
+                {% for i in range(length) %}
                 {% set count = (loop.index - 1) * 2 %}
                 <div class="card-deck">
                     <div class="card">

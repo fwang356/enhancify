@@ -9,8 +9,9 @@ from spotipy.oauth2 import SpotifyClientCredentials
 def get_top_tracks(time_range, sp):
     results = sp.current_user_top_tracks(limit=10, offset=0, time_range=time_range)
     tracks = []
-    for song in range(10):
-        tracks.append(results["items"][song]["id"])
+    if results != []:
+        for song in range(len(results['items'])):
+            tracks.append(results["items"][song]["id"])
     return tracks
 
 

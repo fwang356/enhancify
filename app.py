@@ -42,15 +42,14 @@ else:
     print("Can't get token for " + username)
 """
 
-cache_handler = MemoryCacheHandler()
+#cache_handler = MemoryCacheHandler()
 
 def create_spotify_oauth():
     return SpotifyOAuth(
             client_id=cid,
             client_secret=secret,
             redirect_uri=url_for('authorize', _external=True),
-            scope='user-top-read playlist-modify-public',
-            cache_handler=cache_handler)
+            scope='user-top-read playlist-modify-public')
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -72,9 +71,9 @@ def authorize():
     code = request.args.get('code')
     token_info = sp_oauth.get_access_token(code)
     session["token_info"] = token_info
-    """
-    return render_template('top1.html', sp=sp, top_tracks=short_top_tracks)
-    """
+    if os.path.exists(".cache"):
+        print('nice!')
+        os.remove(".cache")
     return redirect('/top-tracks/short-term')
     
 

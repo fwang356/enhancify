@@ -1,9 +1,11 @@
 from flask import Flask, render_template, url_for, request, redirect, jsonify, session
+from flask_session import Session
 import json
 import sys
 import os
 import time
 import spotipy
+import uuid
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from main import get_top_tracks, recommendation, get_mood, save_top_tracks, save_recs, search_track
@@ -13,7 +15,10 @@ app = Flask(__name__)
 app.secret_key = 'SOMETHING-RANDOM'
 cid = os.getenv('cid')
 secret = os.getenv('secret')
+cid = '91c9906120ee44bdb039a305efe5bbd1'
+secret = 'b1d12fe0c2264a0c9ce7ca3af96818e5'
 app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
+
 
 """
 os.environ['SPOTIPY_CLIENT_ID'] = cid
@@ -43,7 +48,8 @@ def create_spotify_oauth():
             client_id=cid,
             client_secret=secret,
             redirect_uri=url_for('authorize', _external=True),
-            scope='user-top-read playlist-modify-public')
+            scope='user-top-read playlist-modify-public',
+            show_dialog=True)
 
 
 @app.route('/', methods=['POST', 'GET'])

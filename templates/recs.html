@@ -25,7 +25,11 @@
     <div class="container h-100 pt-5" id="graph">
         <div class="row mt-2">
             <div class="col-10 offset-1" id="graph">  
-                <div class='dataviz' id="my_dataviz"></div>
+                <div class='dataviz' id="my_dataviz"></div> 
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-10 offset-1">
                 <h4>
                     Recommendations
                     <form method='POST' action = '/save-recs/' style='display: inline;'>
@@ -34,10 +38,6 @@
                     </button>
                     </form>
                 </h4>    
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-10 offset-1">
                 {% for i in range(10) %}
                 {% set count = (loop.index - 1) * 2 %}
                 <div class="card-deck">
@@ -85,23 +85,14 @@
 <div id="mood" data='{{ data }}'></div>
 <script>
 
-//var mood = JSON.stringify();
-//var data = JSON.parse(mood);
 
 var mood = document.getElementById("mood").getAttribute('data');
 var data = JSON.parse(mood);
 
-/*
-const data = [
-    {name: 'Danceability', score: 50 },
-    {name: 'Valence', score: 30 },
-    {name: 'Energy', score: 40 },
-];
-*/ 
 
-var margin = {top: 10, right: 20, bottom: 40, left: 250},
-width = 650 - margin.left - margin.right,
-height = 300 - margin.top - margin.bottom;
+var margin = {top: 10, right: 80, bottom: 40, left: 100},
+width = window.innerWidth / 2 - margin.left - margin.right,
+height = window.innerHeight / 2.5 - margin.top - margin.bottom;
 
 var svg = d3.select("#my_dataviz").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -161,6 +152,8 @@ svg.selectAll("line")
     .transition()
     .duration(1500)
     .attr("x1", function(d) {return x(d.score); })
+
+</script>
 
 </script>
 {%endblock%}

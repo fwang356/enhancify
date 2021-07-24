@@ -98,7 +98,7 @@ def save_recs(rec, track, sp):
 
 
 def save_top_tracks(tracks, time_range, sp):
-    playlist = sp.user_playlist_create(sp.current_user()['id'], "Your Top Tracks " + time_range)
+    playlist = sp.user_playlist_create(sp.current_user()['id'], "Top Tracks " + time_range)
     playlist_id = playlist['id']
     sp.playlist_add_items(playlist_id, tracks)
 

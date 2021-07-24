@@ -80,7 +80,6 @@ def show_short_top_tracks():
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    print(sp.current_user())
     short_top_tracks = get_top_tracks("short_term", sp)
     return render_template('top1.html', sp=sp, top_tracks=short_top_tracks)
 
@@ -133,13 +132,16 @@ def save():
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
+    short_top_tracks = get_top_tracks("short_term", sp)
+    medium_top_tracks = get_top_tracks("medium_term", sp)
+    long_top_tracks = get_top_tracks("long_term", sp)
     if request.method == 'POST':
         if request.form['save'] == 'save_short_top_tracks':
-            save_top_tracks(short_top_tracks, "for the Last Month.", sp)
+            save_top_tracks(short_top_tracks, "for the Last Month", sp)
         elif request.form['save'] == 'save_medium_top_tracks':
-            save_top_tracks(medium_top_tracks, "for the Last Six Months.",sp)
+            save_top_tracks(medium_top_tracks, "for the Last Six Months",sp)
         elif request.form['save'] == 'save_long_top_tracks':
-            save_top_tracks(long_top_tracks, "of All Time.", sp)
+            save_top_tracks(long_top_tracks, "of All Time", sp)
     return ('', 204)
 
 

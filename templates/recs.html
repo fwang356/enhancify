@@ -13,7 +13,7 @@
     </h5>
     <br>
     <h5 style= "text-align: center;">
-        Danceability: {{ mood[0]['score'] }} &nbsp;&nbsp; Valence: {{ mood[1]['score'] }} &nbsp;&nbsp;  Energy: {{ mood[2]['score'] }}
+        Danceability (D): {{ mood[0]['score'] }} &nbsp;&nbsp; Valence (V): {{ mood[1]['score'] }} &nbsp;&nbsp;  Energy (E): {{ mood[2]['score'] }}
 
     </h5>
 </h4>
@@ -90,21 +90,19 @@ var mood = document.getElementById("mood").getAttribute('data');
 var data = JSON.parse(mood);
 
 
-var margin = {top: 10, right: window.innerWidth / 2, bottom: 40, left: window.innerWidth / 10},
-width = window.innerWidth - margin.left - margin.right,
+var margin = {top: 10, right: window.innerWidth / 8, bottom: 40, left: window.innerWidth / 8},
+width = window.innerWidth / 2- margin.left - margin.right,
 height = window.innerHeight / 3 - margin.top - margin.bottom;
-
-console.log(window.innerWidth)
 
 var svg = d3.select("#my_dataviz").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    .attr("viewBox", [0, 0, window.innerWidth, window.innerHeight / 3], preserveAspectRatio="xMaxYMax meet")
+    .attr("viewBox", [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom], preserveAspectRatio="xMaxYMax meet")
     .append("g")
     .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")")
     .classed("svg-content-responsive", true);
-        
+
 var x = d3.scaleLinear()
     .domain([0, 100])
     .range([ 0, width]);
@@ -117,7 +115,7 @@ svg.append("g")
         
 var y = d3.scaleBand()
     .range([ 0, height ]) 
-    .domain(data.map(function(d) { return d.name; }))
+    .domain(data.map(function(d) { return d.name.substring(0,1); }))
     .padding(1);
 svg.append("g")
     .call(d3.axisLeft(y))
@@ -129,8 +127,8 @@ svg.selectAll("myline")
     .append("line")
         .attr("x1", x(0))
         .attr("x2", x(0))
-        .attr("y1", function(d) { return y(d.name); })
-        .attr("y2", function(d) { return y(d.name); })
+        .attr("y1", function(d) { return y(d.name.substring(0,1)); })
+        .attr("y2", function(d) { return y(d.name.substring(0,1)); })
         .attr("stroke", "#d1d1ff")
         .style("stroke-width", 3)
 
@@ -139,7 +137,7 @@ svg.selectAll("mycircle")
     .enter()
     .append("circle")
         .attr("cx", x(0))
-        .attr("cy", function(d) { return y(d.name); })
+        .attr("cy", function(d) { return y(d.name.substring(0,1)); })
         .attr("r", "8")
         .style("fill", "#d1d1ff")
         .attr("stroke", "#d1d1ff")

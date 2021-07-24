@@ -3,8 +3,9 @@ import os
 import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
-from client import cid, secret
+#from client import cid, secret
 
+"""
 os.environ['SPOTIPY_CLIENT_ID'] = cid
 os.environ['SPOTIPY_CLIENT_SECRET'] = secret
 os.environ['SPOTIPY_REDIRECT_URI'] = 'http://localhost:5000/callback'
@@ -16,7 +17,7 @@ sp = spotipy.Spotify(client_credentials_manager=auth_manager)
 username = ""
 scope = 'user-top-read playlist-modify-public'
 token = util.prompt_for_user_token(username, scope)
-
+"""
 # Returns list of user's top ten track id's
 def get_top_tracks(time_range):
     results = sp.current_user_top_tracks(limit=10, offset=0, time_range=time_range)

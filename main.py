@@ -123,8 +123,9 @@ def search_track(query):
         id = result['id']
         search_results.append(id)
     return search_results
-
+"""
 if token:
     sp = spotipy.Spotify(auth=token)
 else:
     print("Can't get token for " + username)
+"""

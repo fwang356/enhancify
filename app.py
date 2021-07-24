@@ -13,8 +13,6 @@ app = Flask(__name__)
 app.secret_key = 'SOMETHING-RANDOM'
 cid = os.getenv('cid')
 secret = os.getenv('secret')
-cid = '91c9906120ee44bdb039a305efe5bbd1'
-secret = 'b1d12fe0c2264a0c9ce7ca3af96818e5'
 app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
 
 

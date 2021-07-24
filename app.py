@@ -172,9 +172,11 @@ def search():
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
     print(len(request.form['search']))
     print(request.form['search'])
+    """
     if len(request.form['search']) == 0:
         print('empty')
         return ('', 204)
+    """
     query = request.form['search']
     results = search_track(query, sp)
     return render_template('search.html', sp=sp, results=results, query=query)

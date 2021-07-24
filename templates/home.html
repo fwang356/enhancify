@@ -16,50 +16,13 @@
     <h3>Search for a Song to View its Audio Features and Similar Songs</h3>
     <div class="container">
         <div class="wrapper">
-            <input type="text" name="search" id="search" placeholder="Search for a song" autocomplete="chrome-off">
-            <div class="search-btn">
-                <button><i class="fa fa-search"></i></button>
-            </div>
-            <div class="results">
-            </div>
+            <form method = 'POST' action="/search/">
+                <input type="text" method = 'POST' action="/search/" name="search" id="search" placeholder="Search for a song" autocomplete="off">
+                <div class="search-btn">
+                    <button><i method = 'POST' action="/search/" class="fa fa-search"></i></button>
+                </div>
+            </form>
         </div>
     </div>
-    <script src="../js/script.js"></script>
-    <script>
-        let searchable = [
-            "Don't Know What To Do - BLACKPINK",
-            "Door (Your Moon) - Jeong Sewoon"
-        ];
-
-        const searchInput = document.getElementById('search');
-        const searchWrapper = document.querySelector('.wrapper');
-        const resultsWrapper = document.querySelector('.results');
-
-        searchInput.addEventListener('keyup', () => {
-        let results = [];
-        let input = searchInput.value;
-        if (input.length > 0) {
-            results = searchable.filter((item) => {
-            return item.toLowerCase().includes(input.toLowerCase());
-            });
-        }
-        renderResults(results);
-        });
-
-        function renderResults(results) {
-        if (results.length == 0) {
-            return searchWrapper.classList.remove('show');
-        }
-
-        const content = results
-            .map((item) => {
-            return `<li>${item}</li>`;
-            })
-            .join('');
-
-        searchWrapper.classList.add('show');
-        resultsWrapper.innerHTML = `<ul>${content}</ul>`;
-        }
-    </script>
 </div>
 {%endblock%}

@@ -13,7 +13,7 @@
     </h5>
     <br>
     <h5 style= "text-align: center;">
-        Danceability: {{ mood['danceability'] }} &nbsp;&nbsp; Valence: {{ mood['valence'] }} &nbsp;&nbsp;  Energy: {{ mood['energy'] }}
+        Danceability: {{ mood[0]['score'] }} &nbsp;&nbsp; Valence: {{ mood[1]['score'] }} &nbsp;&nbsp;  Energy: {{ mood[2]['score'] }}
 
     </h5>
 </h4>
@@ -52,7 +52,7 @@
                             <br>
                             <br>
                             <br>
-                            <form action="/recs/">
+                            <form method= 'POST', action="/recs/">
                                 <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ recs[count] }}", action= "/recs/">
                                     Audio Analysis and Similar Songs
                                 </button>
@@ -70,7 +70,7 @@
                             <br>
                             <br>
                             <br>
-                            <form action="/recs/">
+                            <form method= 'POST', action="/recs/">
                                 <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ recs[count] }}", action= "/recs/">
                                     Audio Analysis and Similar Songs
                                 </button>
@@ -83,32 +83,23 @@
         </div>
     </div>
 </section>
-</div>
-    <!--<table>
-
-        <tr>
-            <th>Name</th>
-            <th>Artist</th>
-            <th></th>
-        </tr>
-        {% for track in recs %}
-            <tr>
-                <td>{{ sp.track(track)['name'] }}</td>
-                <td>{{ sp.track(track)['artists'][0]['name'] }}</td>
-                <td>
-                    <a href="/recs/{{track}}">Similar Songs</a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>-->
+<div id="mood" data='{{ data }}'></div>
 <script>
+
+//var mood = JSON.stringify();
+//var data = JSON.parse(mood);
+
+var mood = document.getElementById("mood").getAttribute('data');
+var data = JSON.parse(mood);
+
+/*
 const data = [
     {name: 'Danceability', score: 50 },
     {name: 'Valence', score: 30 },
     {name: 'Energy', score: 40 },
 ];
-        
-        
+*/ 
+
 var margin = {top: 10, right: 20, bottom: 40, left: 250},
 width = 650 - margin.left - margin.right,
 height = 300 - margin.top - margin.bottom;

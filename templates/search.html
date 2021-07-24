@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block head%}
+<nav class="navbar navbar-custom", action="/">
+    <a class="navbar-brand" href="/">
+        moodi
+    </a>
+</nav>
+<h4 style="text-align: center;">
+    Showing Results for "{{ query }}"
+</h4>
+{%endblock%}
+
+{% block body%}
+
+<section class="" id="top_tracks">
+    <div class="container h-100 pt-5">
+        <h3 style="text-align: center;">Search for a Different Song</h3>
+        <div class="container" id=#search-again style="padding-bottom: 2.5%;">
+            <div class="wrapper">
+                <form method = 'POST' action="/search/" id=#search-again>
+                    <input type="text" method = 'POST' action="/search/" name="search" id="search" placeholder="Search for a song" autocomplete="off">
+                    <div class="search-btn">
+                        <button><i method = 'POST' action="/search/" class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-10 offset-1">
+                {% for i in range(10) %}
+                {% set count = (loop.index - 1) * 2 %}
+                <div class="card-deck">
+                    <div class="card">
+                        <a class="img_link" href="{{ sp.track(results[count])['external_urls']['spotify'] }}">
+                            <img class="card-img" src= "{{sp.track(results[count])['album']['images'][0]['url']}}">     
+                        </a>
+                        <div class="card-body">
+                            <h5>{{count + 1}}. {{ sp.track(results[count])['name'] }}</h5>
+                            <small>By {{ sp.track(results[count])['artists'][0]['name'] }}</small>
+                            <br>
+                            <br>
+                            <br>
+                            <form method="POST" action="/recs/">
+                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ results[count] }}", action= "/recs/">
+                                    Audio Analysis and Similar Songs
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% set count = count + 1 %}
+                    <div class="card">
+                        <a class="img_link" href="{{ sp.track(results[count])['external_urls']['spotify'] }}">
+                            <img class="card-img" src= "{{sp.track(results[count])['album']['images'][0]['url']}}">     
+                        </a>
+                        <div class="card-body">
+                            <h5>{{count + 1}}. {{ sp.track(results[count])['name'] }}</h5>
+                            <small>By {{ sp.track(results[count])['artists'][0]['name'] }}</small>
+                            <br>
+                            <br>
+                            <br>
+                            <form method="POST" action="/recs/">
+                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ results[count] }}", action= "/recs/">
+                                    Audio Analysis and Similar Songs
+                                </button>
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{%endblock%}

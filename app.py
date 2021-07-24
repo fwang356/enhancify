@@ -1,11 +1,12 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, jsonify
+import json
 import sys
 import os
 import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
 from client import cid, secret
-from main import get_top_tracks, recommendation, get_mood, save_top_tracks, save_recs
+from main import get_top_tracks, recommendation, get_mood, save_top_tracks, save_recs, search_track
 
 app = Flask(__name__)
 
@@ -36,6 +37,10 @@ else:
 def index():
     return render_template("home.html")
 
+
+
+
+
 @app.route('/top-tracks/short-term', methods=['GET', 'POST'])
 def show_short_top_tracks():
     """
@@ -50,6 +55,7 @@ def show_short_top_tracks():
 def show_medium_top_tracks():
     return render_template('top2.html', sp=sp, top_tracks=medium_top_tracks)
 
+
 @app.route('/top-tracks/long-term', methods=['GET', 'POST'])
 def show_long_top_tracks():
     return render_template('top3.html', sp=sp, top_tracks=long_top_tracks)
@@ -60,15 +66,10 @@ def recs():
     if request.method == 'POST':
         track = request.form['recs']
         mood = get_mood(track)
+        mood_string = json.dumps(mood)
         recs = recommendation(track)
-        return render_template('recs.html', sp=sp, recs=recs, track=track, mood=mood)
-"""
-@app.route('/saved-recs/', methods=['GET', 'POST'])
-def saved_recs():
-    if request.method == 'POST':
-        track = request.form['save']
-        mood = get_mood(track)
-"""   
+        return render_template('recs.html', sp=sp, recs=recs, track=track, mood=mood, data=mood_string)
+
 
 @app.route('/save-top-tracks/', methods=['GET','POST'])
 def save():
@@ -81,6 +82,7 @@ def save():
             save_top_tracks(long_top_tracks, "of All Time.")
     return ('', 204)
 
+
 @app.route('/save-recs/', methods=['GET', 'POST'])
 def save_recommendations():
     if request.method == 'POST':
@@ -91,6 +93,13 @@ def save_recommendations():
         save_recs(recs, track)
     return ('', 204)
 
+
+@app.route('/search/', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        query = request.form['search']
+        results = search(query)
+    return render_template('search.html', sp=sp, results=results, query=query)
 
 if __name__ == "__main__":
     app.run(debug=True)

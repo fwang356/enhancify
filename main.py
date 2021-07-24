@@ -29,11 +29,23 @@ def get_top_tracks(time_range):
 # Returns list of moods for inputted track
 def get_mood(track):
     track_analysis = sp.audio_features(track)
-    moods = {}
-    tracks_mood = {'danceability': round(100 * track_analysis[0]['danceability']),
-                    'energy': round(100 * track_analysis[0]['energy']), 'valence': round(100 * track_analysis[0]['valence'])}
-    moods.update(tracks_mood)
-    return moods
+    tracks_mood = [
+        {
+            'name': 'Danceability',
+            'score': round(100 * track_analysis[0]['danceability'])
+        },
+
+        {
+            'name': 'Valence',
+            'score': round(100 * track_analysis[0]['valence'])
+        },
+
+        {
+            'name': 'Energy',
+            'score': round(100 * track_analysis[0]['energy'])
+        }
+    ]
+    return tracks_mood
 
 
 # Returns list of recommended tracks based on inputted track
@@ -102,8 +114,14 @@ def save_top_tracks(tracks, time_range):
     sp.playlist_add_items(playlist_id, tracks)
 
 
-def search(query):
-    return sp.search(query, limit)
+def search_track(query):
+    results = sp.search(query, limit=20, type="track")['tracks']['items']
+    search_results = []
+   
+    for result in results:
+        id = result['id']
+        search_results.append(id)
+    return search_results
 
 if token:
     sp = spotipy.Spotify(auth=token)

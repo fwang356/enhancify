@@ -90,9 +90,9 @@ var mood = document.getElementById("mood").getAttribute('data');
 var data = JSON.parse(mood);
 
 
-var margin = {top: 10, right: window.innerWidth / 16, bottom: 40, left: window.innerWidth / 16},
+var margin = {top: 10, right: window.innerWidth / 8, bottom: 40, left: window.innerWidth / 8},
 width = window.innerWidth / 2 - margin.left - margin.right,
-height = window.innerHeight / 2.5 - margin.top - margin.bottom;
+height = window.innerHeight / 3 - margin.top - margin.bottom;
 
 var svg = d3.select("#my_dataviz").append("svg")
     .attr("width", width + margin.left + margin.right)

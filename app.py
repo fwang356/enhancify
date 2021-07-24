@@ -19,31 +19,6 @@ secret = 'b1d12fe0c2264a0c9ce7ca3af96818e5'
 app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
 
 
-"""
-os.environ['SPOTIPY_CLIENT_ID'] = cid
-os.environ['SPOTIPY_CLIENT_SECRET'] = secret
-os.environ['SPOTIPY_REDIRECT_URI'] = 'http://localhost:8888/callback'
-
-auth_manager = SpotifyClientCredentials(client_id=cid,
-                                        client_secret=secret)
-sp = spotipy.Spotify(client_credentials_manager=auth_manager)
-
-username = ""
-scope = 'user-top-read playlist-modify-public'
-token = util.prompt_for_user_token(username, scope)
-
-
-if token:
-    sp = spotipy.Spotify(auth=token)
-    short_top_tracks = get_top_tracks("short_term")
-    medium_top_tracks = get_top_tracks("medium_term")
-    long_top_tracks = get_top_tracks("long_term")
-else:
-    print("Can't get token for " + username)
-"""
-
-#cache_handler = MemoryCacheHandler()
-
 def create_spotify_oauth():
     return SpotifyOAuth(
             client_id=cid,
@@ -201,13 +176,3 @@ def search():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-
-"""
-Reminders:
-Everything works for me even after I remove cache file
-sp.current_user() causes an None error
-top_tracks() works fine even though it uses sp.current_user_top_tracks()
-Also can't access profile pic, links
-"""

@@ -43,6 +43,7 @@
         <div class="row mt-2">
             <div class="col-10 offset-1">
                 <h4>
+                    <img class="pfp" src= "{{ sp.current_user()['images'][0]['url'] }}">
                     Your Top Songs
                     <form method='POST' action = '/save-top-tracks/', style='display: inline;'>
                         <button type="submit", action = '/save-top-tracks/', class="btn btn-custom", name= "save", id="save_top_tracks", value="save_short_top_tracks">

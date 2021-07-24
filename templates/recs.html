@@ -90,14 +90,16 @@ var mood = document.getElementById("mood").getAttribute('data');
 var data = JSON.parse(mood);
 
 
-var margin = {top: 10, right: window.innerWidth / 8, bottom: 40, left: window.innerWidth / 8},
-width = window.innerWidth / 2 - margin.left - margin.right,
+var margin = {top: 10, right: window.innerWidth / 2, bottom: 40, left: window.innerWidth / 16},
+width = window.innerWidth - margin.left - margin.right,
 height = window.innerHeight / 3 - margin.top - margin.bottom;
+
+console.log(window.innerWidth)
 
 var svg = d3.select("#my_dataviz").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    .attr("viewBox", [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom], preserveAspectRatio="xMaxYMax meet")
+    .attr("viewBox", [0, 0, window.innerWidth, window.innerHeight / 3], preserveAspectRatio="xMaxYMax meet")
     .append("g")
     .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")")
@@ -119,7 +121,7 @@ var y = d3.scaleBand()
     .padding(1);
 svg.append("g")
     .call(d3.axisLeft(y))
-    .style("font", "16px Lato")
+    .style("font", "14px Lato")
         
 svg.selectAll("myline")
     .data(data)

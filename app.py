@@ -5,6 +5,7 @@ import os
 import time
 import spotipy
 import spotipy.util as util
+from cache_handler import MemoryCacheHandler
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from main import get_top_tracks, recommendation, get_mood, save_top_tracks, save_recs, search_track
 
@@ -41,12 +42,15 @@ else:
     print("Can't get token for " + username)
 """
 
+cache_handler = MemoryCacheHandler()
+
 def create_spotify_oauth():
     return SpotifyOAuth(
             client_id=cid,
             client_secret=secret,
             redirect_uri=url_for('authorize', _external=True),
-            scope='user-top-read playlist-modify-public')
+            scope='user-top-read playlist-modify-public',
+            cache_handler=cache_handler)
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -102,11 +106,6 @@ def show_short_top_tracks():
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
     short_top_tracks = get_top_tracks("short_term", sp)
-    """
-    if request.method == 'POST':
-        if request.form['save'] == 'save_top_tracks':
-            save_top_tracks(top_tracks)
-    """
     return render_template('top1.html', sp=sp, top_tracks=short_top_tracks)
 
 

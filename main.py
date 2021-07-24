@@ -3,23 +3,10 @@ import os
 import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
-#from client import cid, secret
 
-"""
-os.environ['SPOTIPY_CLIENT_ID'] = cid
-os.environ['SPOTIPY_CLIENT_SECRET'] = secret
-os.environ['SPOTIPY_REDIRECT_URI'] = 'http://localhost:5000/callback'
 
-auth_manager = SpotifyClientCredentials(client_id=cid,
-                                        client_secret=secret)
-sp = spotipy.Spotify(client_credentials_manager=auth_manager)
-
-username = ""
-scope = 'user-top-read playlist-modify-public'
-token = util.prompt_for_user_token(username, scope)
-"""
 # Returns list of user's top ten track id's
-def get_top_tracks(time_range):
+def get_top_tracks(time_range, sp):
     results = sp.current_user_top_tracks(limit=10, offset=0, time_range=time_range)
     tracks = []
     for song in range(10):
@@ -28,7 +15,7 @@ def get_top_tracks(time_range):
 
 
 # Returns list of moods for inputted track
-def get_mood(track):
+def get_mood(track, sp):
     track_analysis = sp.audio_features(track)
     tracks_mood = [
         {
@@ -50,7 +37,7 @@ def get_mood(track):
 
 
 # Returns list of recommended tracks based on inputted track
-def recommendation(track):
+def recommendation(track, sp):
     track_analysis = sp.audio_features(track)
 
     artist_id = sp.track(track)['artists'][0]['id']
@@ -103,19 +90,19 @@ def recommendation(track):
     return rec_tracks
 
 
-def save_recs(rec, track):
+def save_recs(rec, track, sp):
     playlist = sp.user_playlist_create(sp.current_user()['id'], sp.track(track)['name'] + ' Recs')
     playlist_id = playlist['id']
     sp.playlist_add_items(playlist_id, rec)
 
 
-def save_top_tracks(tracks, time_range):
+def save_top_tracks(tracks, time_range, sp):
     playlist = sp.user_playlist_create(sp.current_user()['id'], "Your Top Tracks " + time_range)
     playlist_id = playlist['id']
     sp.playlist_add_items(playlist_id, tracks)
 
 
-def search_track(query):
+def search_track(query, sp):
     results = sp.search(query, limit=20, type="track")['tracks']['items']
     search_results = []
    
@@ -123,9 +110,3 @@ def search_track(query):
         id = result['id']
         search_results.append(id)
     return search_results
-"""
-if token:
-    sp = spotipy.Spotify(auth=token)
-else:
-    print("Can't get token for " + username)
-"""

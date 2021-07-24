@@ -71,9 +71,11 @@ def authorize():
     code = request.args.get('code')
     token_info = sp_oauth.get_access_token(code)
     session["token_info"] = token_info
+    """
     if os.path.exists(".cache"):
         print('nice!')
         os.remove(".cache")
+    """
     return redirect('/top-tracks/short-term')
     
 
@@ -198,3 +200,13 @@ def search():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+"""
+Reminders:
+Everything works for me even after I remove cache file
+sp.current_user() causes an None error
+top_tracks() works fine even though it uses sp.current_user_top_tracks()
+Also can't access profile pic, links
+"""

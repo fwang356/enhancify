@@ -71,11 +71,11 @@ def authorize():
     code = request.args.get('code')
     token_info = sp_oauth.get_access_token(code)
     session["token_info"] = token_info
-    """
+
     if os.path.exists(".cache"):
         print('nice!')
         os.remove(".cache")
-    """
+
     return redirect('/top-tracks/short-term')
     
 
@@ -106,6 +106,7 @@ def show_short_top_tracks():
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
+    print(sp.current_user())
     short_top_tracks = get_top_tracks("short_term", sp)
     return render_template('top1.html', sp=sp, top_tracks=short_top_tracks)
 

@@ -46,8 +46,7 @@ def create_spotify_oauth():
             client_id=cid,
             client_secret=secret,
             redirect_uri=url_for('authorize', _external=True),
-            scope='user-top-read playlist-modify-public',
-            show_dialog=True)
+            scope='user-top-read playlist-modify-public')
 
 
 @app.route('/', methods=['POST', 'GET'])

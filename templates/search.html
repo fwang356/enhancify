@@ -28,7 +28,9 @@
         </div>
         <div class="row mt-2">
             <div class="col-10 offset-1">
-                {% for i in range(10) %}
+                {% set length = results | length %}
+                {% set length = (length / 2) | int %}
+                {% for i in range(length) %}
                 {% set count = (loop.index - 1) * 2 %}
                 <div class="card-deck">
                     <div class="card">

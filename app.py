@@ -11,7 +11,7 @@ from main import get_top_tracks, recommendation, get_mood, save_top_tracks, save
 app = Flask(__name__)
 
 app.secret_key = 'SOMETHING-RANDOM'
-cid = os.getenv('id')
+cid = os.getenv('cid')
 secret = os.getenv('secret')
 app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
 

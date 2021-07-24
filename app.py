@@ -108,12 +108,9 @@ def show_long_top_tracks():
 
 @app.route('/recs/', methods=['GET', 'POST'])
 def recs():
-    token_info = get_token()
-    session['token_info'], authorized = get_token()
-    session.modified = True
-    if not authorized:
-        return redirect('/')
-    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
+    auth_manager = SpotifyClientCredentials(client_id=cid,
+                                        client_secret=secret)
+    sp = spotipy.Spotify(client_credentials_manager=auth_manager)
     if request.method == 'POST':
         track = request.form['recs']
         mood = get_mood(track, sp)

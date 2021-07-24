@@ -164,19 +164,13 @@ def save_recommendations():
 
 @app.route('/search/', methods=['GET', 'POST'])
 def search():
-    token_info = get_token()
-    session['token_info'], authorized = get_token()
-    session.modified = True
-    if not authorized:
-        return redirect('/')
-    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    print(len(request.form['search']))
-    print(request.form['search'])
-    """
-    if len(request.form['search']) == 0:
-        print('empty')
+    auth_manager = SpotifyClientCredentials(client_id=cid,
+                                        client_secret=secret)
+    sp = spotipy.Spotify(client_credentials_manager=auth_manager)
+    
+    if request.form['search'] == '':
         return ('', 204)
-    """
+
     query = request.form['search']
     results = search_track(query, sp)
     return render_template('search.html', sp=sp, results=results, query=query)

@@ -5,7 +5,6 @@ import os
 import time
 import spotipy
 import spotipy.util as util
-from cache_handler import MemoryCacheHandler
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from main import get_top_tracks, recommendation, get_mood, save_top_tracks, save_recs, search_track
 

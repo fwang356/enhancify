@@ -5,7 +5,7 @@ import os
 import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
-#from client import cid, secret
+
 from main import get_top_tracks, recommendation, get_mood, save_top_tracks, save_recs, search_track
 
 app = Flask(__name__)
@@ -36,10 +36,7 @@ else:
 @app.route('/', methods=['POST', 'GET'])
 def index():
     return render_template("home.html")
-
-
-
-
+    
 
 @app.route('/top-tracks/short-term', methods=['GET', 'POST'])
 def show_short_top_tracks():

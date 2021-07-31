@@ -112,11 +112,18 @@ def recs():
                                         client_secret=secret)
     sp = spotipy.Spotify(client_credentials_manager=auth_manager)
     if request.method == 'POST':
-        track = request.form['recs']
-        mood = get_mood(track, sp)
+        track_id = request.form['recs']
+        track_name = sp.track(track_id)['name']
+        track_artist = sp.track(track_id)['artists'][0]['name']
+        mood = get_mood(track_id, sp)
         mood_string = json.dumps(mood)
-        recs = recommendation(track, sp)
-        return render_template('recs.html', sp=sp, recs=recs, track=track, mood=mood, data=mood_string)
+        recs = recommendation(track_id, sp)
+        rec_tracks = []
+        for i in range(len(recs['tracks'])):
+            rec_tracks.append(recs['tracks'][i]['id'])
+        rec_tracks = list(set(rec_tracks))
+        print(rec_tracks)
+        return render_template('recs.html', sp=sp, rec_tracks=rec_tracks, recs=recs, track_id=track_id, track_name=track_name, track_artist=track_artist, mood=mood, data=mood_string)
 
 
 @app.route('/save-top-tracks/', methods=['GET','POST'])
@@ -127,16 +134,26 @@ def save():
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    short_top_tracks = get_top_tracks("short_term", sp)
-    medium_top_tracks = get_top_tracks("medium_term", sp)
-    long_top_tracks = get_top_tracks("long_term", sp)
+    
     if request.method == 'POST':
         if request.form['save'] == 'save_short_top_tracks':
-            save_top_tracks(short_top_tracks, "for the Last Month", sp)
+            short_top_tracks = get_top_tracks("short_term", sp)
+            tracks = []
+            for song in range(len(short_top_tracks['items'])):
+                tracks.append(short_top_tracks["items"][song]["id"])
+            save_top_tracks(tracks, "for the Last Month", sp)
         elif request.form['save'] == 'save_medium_top_tracks':
-            save_top_tracks(medium_top_tracks, "for the Last Six Months",sp)
+            medium_top_tracks = get_top_tracks("medium_term", sp)
+            tracks = []
+            for song in range(len(medium_top_tracks['items'])):
+                tracks.append(medium_top_tracks["items"][song]["id"])
+            save_top_tracks(tracks, "for the Last Six Months",sp)
         elif request.form['save'] == 'save_long_top_tracks':
-            save_top_tracks(long_top_tracks, "of All Time", sp)
+            long_top_tracks = get_top_tracks("long_term", sp)
+            tracks = []
+            for song in range(len(long_top_tracks['items'])):
+                tracks.append(long_top_tracks["items"][song]["id"])
+            save_top_tracks(tracks, "of All Time", sp)
     return ('', 204)
 
 
@@ -168,6 +185,7 @@ def search():
 
     query = request.form['search']
     results = search_track(query, sp)
+    print(results)
     return render_template('search.html', sp=sp, results=results, query=query)
 
 if __name__ == "__main__":

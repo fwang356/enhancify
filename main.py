@@ -7,12 +7,15 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 # Returns list of user's top ten track id's
 def get_top_tracks(time_range, sp):
+    """
     results = sp.current_user_top_tracks(limit=10, offset=0, time_range=time_range)
     tracks = []
     if results != []:
         for song in range(len(results['items'])):
             tracks.append(results["items"][song]["id"])
     return tracks
+    """
+    return sp.current_user_top_tracks(limit=10, offset=0, time_range=time_range)
 
 
 # Returns list of moods for inputted track
@@ -63,16 +66,9 @@ def recommendation(track, sp):
                                      min_valence=max(valence - .15, .01), max_valence=min(valence + .15, .99),
                                      min_popularity=max(popularity - 15, 1), max_popularity=min(popularity + 15, 99))
 
-    rec_tracks = []
-    for i in range(len(recommended['tracks'])):
-        rec_tracks.append(recommended['tracks'][i]['id'])
-    rec_tracks = list(set(rec_tracks))
-
-    if track in rec_tracks:
-        rec_tracks.remove(track)
 
     count = 0.05
-    while len(rec_tracks) != 20:
+    while len(recommended['tracks']) != 20:
         recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks,
                                          limit=20 - len(rec_tracks),
                                          min_danceability=max(danceability - .15 - count, 0.01),
@@ -82,13 +78,8 @@ def recommendation(track, sp):
                                          max_valence=min(valence + .15 + count, 0.99),
                                          min_popularity=max(popularity - 15 - int(count * 100), 1),
                                          max_popularity=min(popularity + 15 + int(count * 100), 99))
-        for i in range(len(recommended['tracks'])):
-            rec_tracks.append(recommended['tracks'][i]['id'])
-        rec_tracks = list(set(rec_tracks))
-        if track in rec_tracks:
-            rec_tracks.remove(track)
         count = count + 0.05
-    return rec_tracks
+    return recommended
 
 
 def save_recs(rec, track, sp):
@@ -105,9 +96,4 @@ def save_top_tracks(tracks, time_range, sp):
 
 def search_track(query, sp):
     results = sp.search(query, limit=20, type="track")['tracks']['items']
-    search_results = []
-   
-    for result in results:
-        id = result['id']
-        search_results.append(id)
-    return search_results
+    return results

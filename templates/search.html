@@ -34,17 +34,17 @@
                 {% set count = (loop.index - 1) * 2 %}
                 <div class="card-deck">
                     <div class="card">
-                        <a class="img_link" href="{{ sp.track(results[count])['external_urls']['spotify'] }}">
-                            <img class="card-img" src= "{{sp.track(results[count])['album']['images'][0]['url']}}">     
+                        <a class="img_link" href="{{ results[count]['external_urls']['spotify'] }}">
+                            <img class="card-img" src= "{{results[count]['album']['images'][0]['url']}}">     
                         </a>
                         <div class="card-body">
-                            <h5>{{count + 1}}. {{ sp.track(results[count])['name'] }}</h5>
-                            <small>By {{ sp.track(results[count])['artists'][0]['name'] }}</small>
+                            <h5>{{count + 1}}. {{ results[count]['name'] }}</h5>
+                            <small>By {{ results[count]['artists'][0]['name'] }}</small>
                             <br>
                             <br>
                             <br>
                             <form method="POST" action="/recs/">
-                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ results[count] }}", action= "/recs/">
+                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ results[count]['id'] }}", action= "/recs/">
                                     Audio Analysis and Similar Songs
                                 </button>
                             </form>
@@ -52,17 +52,17 @@
                     </div>
                     {% set count = count + 1 %}
                     <div class="card">
-                        <a class="img_link" href="{{ sp.track(results[count])['external_urls']['spotify'] }}">
-                            <img class="card-img" src= "{{sp.track(results[count])['album']['images'][0]['url']}}">     
+                        <a class="img_link" href="{{ results[count]['external_urls']['spotify'] }}">
+                            <img class="card-img" src= "{{results[count]['album']['images'][0]['url']}}">     
                         </a>
                         <div class="card-body">
-                            <h5>{{count + 1}}. {{ sp.track(results[count])['name'] }}</h5>
-                            <small>By {{ sp.track(results[count])['artists'][0]['name'] }}</small>
+                            <h5>{{count + 1}}. {{ results[count]['name'] }}</h5>
+                            <small>By {{ results[count]['artists'][0]['name'] }}</small>
                             <br>
                             <br>
                             <br>
                             <form method="POST" action="/recs/">
-                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ results[count] }}", action= "/recs/">
+                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ results[count]['id'] }}", action= "/recs/">
                                     Audio Analysis and Similar Songs
                                 </button>
                             </form> 

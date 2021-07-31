@@ -43,8 +43,9 @@ def get_mood(track, sp):
 # Returns list of recommended tracks based on inputted track
 def recommendation(track, sp):
     track_analysis = sp.audio_features(track)
+    track_search = sp.track(track)
 
-    artist_id = sp.track(track)['artists'][0]['id']
+    artist_id = track_search['artists'][0]['id']
     artists = [artist_id]
     tracks = [track]
     genre = sp.artist(artist_id)['genres']
@@ -56,7 +57,7 @@ def recommendation(track, sp):
     danceability = track_analysis[0]['danceability']
     energy = track_analysis[0]['energy']
     valence = track_analysis[0]['valence']
-    popularity = (sp.track(track)['popularity'] + sp.artist(artist_id)['popularity']) / 2
+    popularity = (track_search['popularity'] + sp.artist(artist_id)['popularity']) / 2
     popularity = round(popularity)
 
     recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks, limit=20,
@@ -67,6 +68,9 @@ def recommendation(track, sp):
                                      min_popularity=max(popularity - 15, 1), max_popularity=min(popularity + 15, 99))
 
 
+    if track_search in recommended['tracks']:
+        recommended['tracks'].remove(track_search)
+        
     count = 0.05
     while len(recommended['tracks']) != 20:
         recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks,
@@ -78,6 +82,8 @@ def recommendation(track, sp):
                                          max_valence=min(valence + .15 + count, 0.99),
                                          min_popularity=max(popularity - 15 - int(count * 100), 1),
                                          max_popularity=min(popularity + 15 + int(count * 100), 99))
+        if track_search in recommended['tracks']:
+            recommended['tracks'].remove(track_search)
         count = count + 0.05
     return recommended
 

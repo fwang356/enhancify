@@ -57,7 +57,7 @@
         </div>
         <div class="row mt-2">
             <div class="col-10 offset-1">
-                {% set length = top_tracks | length %}
+                {% set length = top_tracks['items'] | length %}  
                 {% set length = (length / 2) | int %}
                 {% for i in range(length) %}
                 {% set count = (loop.index - 1) * 2 %}

@@ -32,11 +32,13 @@
             <div class="col-10 offset-1">
                 <h4>
                     Recommendations
-                    <form method='POST' action = '/save-recs/' style='display: inline;'>
-                        <button type="submit", class="btn btn-custom", action= "/save-recs/", name = "save",  value="{{ rec_tracks|join('') + track_id }}">
-                        Save as a Playlist
-                    </button>
-                    </form>
+                    {% if logged_in %}
+                        <form method='POST' action = '/save-recs/' style='display: inline;'>
+                            <button type="submit", class="btn btn-custom", action= "/save-recs/", name = "save",  value="{{ rec_tracks|join('') + track_id }}">
+                            Save as a Playlist
+                        </button>
+                        </form>
+                    {% endif %}
                 </h4>    
                 {% for i in range(10) %}
                 {% set count = (loop.index - 1) * 2 %}

@@ -29,29 +29,53 @@
         <div class="row mt-2">
             <div class="col-10 offset-1">
                 {% set length = results | length %}
+                {% set original_length = length %}
                 {% set length = (length / 2) | int %}
                 {% for i in range(length) %}
-                {% set count = (loop.index - 1) * 2 %}
-                <div class="card-deck">
-                    <div class="card">
-                        <a class="img_link" href="{{ results[count]['external_urls']['spotify'] }}">
-                            <img class="card-img" src= "{{results[count]['album']['images'][0]['url']}}">     
-                        </a>
-                        <div class="card-body">
-                            <h5>{{count + 1}}. {{ results[count]['name'] }}</h5>
-                            <small>By {{ results[count]['artists'][0]['name'] }}</small>
-                            <br>
-                            <br>
-                            <br>
-                            <form method="POST" action="/recs/">
-                                <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ results[count]['id'] }}", action= "/recs/">
-                                    Audio Analysis and Similar Songs
-                                </button>
-                            </form>
+                    {% set count = (loop.index - 1) * 2 %}
+                    <div class="card-deck">
+                        <div class="card">
+                            <a class="img_link" href="{{ results[count]['external_urls']['spotify'] }}">
+                                <img class="card-img" src= "{{results[count]['album']['images'][0]['url']}}">     
+                            </a>
+                            <div class="card-body">
+                                <h5>{{count + 1}}. {{ results[count]['name'] }}</h5>
+                                <small>By {{ results[count]['artists'][0]['name'] }}</small>
+                                <br>
+                                <br>
+                                <br>
+                                <form method="POST" action="/recs/">
+                                    <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ results[count]['id'] }}", action= "/recs/">
+                                        Audio Analysis and Similar Songs
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        {% set count = count + 1 %}
+                        <div class="card">
+                            <a class="img_link" href="{{ results[count]['external_urls']['spotify'] }}">
+                                <img class="card-img" src= "{{results[count]['album']['images'][0]['url']}}">     
+                            </a>
+                            <div class="card-body">
+                                <h5>{{count + 1}}. {{ results[count]['name'] }}</h5>
+                                <small>By {{ results[count]['artists'][0]['name'] }}</small>
+                                <br>
+                                <br>
+                                <br>
+                                <form method="POST" action="/recs/">
+                                    <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ results[count]['id'] }}", action= "/recs/">
+                                        Audio Analysis and Similar Songs
+                                    </button>
+                                </form> 
+                            </div>
                         </div>
                     </div>
-                    {% set count = count + 1 %}
-                    <div class="card">
+                {% endfor %}
+
+                {% if original_length % 2 == 1 %}
+                    {% set count = original_length - 1 %}
+                    <div class="card-deck">
+                        <div class="card">
                         <a class="img_link" href="{{ results[count]['external_urls']['spotify'] }}">
                             <img class="card-img" src= "{{results[count]['album']['images'][0]['url']}}">     
                         </a>
@@ -68,8 +92,7 @@
                             </form> 
                         </div>
                     </div>
-                </div>
-                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

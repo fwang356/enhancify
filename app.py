@@ -51,7 +51,7 @@ def authorize():
         os.remove(".cache")
 
     return redirect('/top-tracks/short-term')
-    
+
 
 def get_token():
     token_valid = False
@@ -110,6 +110,12 @@ def show_long_top_tracks():
 
 @app.route('/recs/', methods=['GET', 'POST'])
 def recs():
+    logged_in = True
+    token_info = get_token()
+    session['token_info'], authorized = get_token()
+    session.modified = True
+    if not authorized:
+        logged_in = False
     auth_manager = SpotifyClientCredentials(client_id=cid,
                                         client_secret=secret)
     sp = spotipy.Spotify(client_credentials_manager=auth_manager)
@@ -124,8 +130,9 @@ def recs():
         for i in range(len(recs['tracks'])):
             rec_tracks.append(recs['tracks'][i]['id'])
         rec_tracks = list(set(rec_tracks))
-        print(rec_tracks)
-        return render_template('recs.html', sp=sp, rec_tracks=rec_tracks, recs=recs, track_id=track_id, track_name=track_name, track_artist=track_artist, mood=mood, data=mood_string)
+        print(logged_in)
+        return render_template('recs.html', sp=sp, rec_tracks=rec_tracks, recs=recs, track_id=track_id,
+                                track_name=track_name, track_artist=track_artist, mood=mood, data=mood_string, logged_in=logged_in)
 
 
 @app.route('/save-top-tracks/', methods=['GET','POST'])
@@ -187,7 +194,6 @@ def search():
 
     query = request.form['search']
     results = search_track(query, sp)
-    print(results)
     return render_template('search.html', sp=sp, results=results, query=query)
 
 if __name__ == "__main__":

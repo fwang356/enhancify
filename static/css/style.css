@@ -45,8 +45,8 @@ head, body, html {
 }
 
 h1{
-    font-size: 120px;
-    padding-top: 10%;
+    font-size: 150px;
+    padding-top: 15%;
 }
 
 h2{
@@ -92,6 +92,11 @@ h4{
 .container {
     margin: auto;
     width: 100%;
+}
+
+.container#search-container {
+    text-align: center;
+    padding-top: 2%;
 }
 
 .col {

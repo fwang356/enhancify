@@ -15,7 +15,6 @@ cid = os.getenv('cid')
 secret = os.getenv('secret')
 app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
 
-
 def create_spotify_oauth():
     return SpotifyOAuth(
             client_id=cid,

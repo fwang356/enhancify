@@ -74,7 +74,7 @@ def recommendation(track, sp):
     count = 0.05
     while len(recommended['tracks']) != 20:
         recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks,
-                                         limit=20 - len(rec_tracks),
+                                         limit=20 - len(recommended['tracks']),
                                          min_danceability=max(danceability - .15 - count, 0.01),
                                          max_danceability=min(danceability + .15 + count, 0.99),
                                          min_energy=max(energy - .15 - count, 0.01), max_energy=min(energy + .15 - count, 0.99),

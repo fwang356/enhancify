@@ -40,8 +40,8 @@
                         </form>
                     {% endif %}
                 </h4>    
-                {% set length = recs | length %}
-                {% set length = (length / 2) | int%}
+                {% set length = recs['tracks'] | length %}
+                {% set length = (length / 2) | int %}
                 {% for i in range(length) %}
                     {% set count = (loop.index - 1) * 2 %}
                     <div class="card-deck">

@@ -70,21 +70,7 @@ def recommendation(track, sp):
 
     if track_search in recommended['tracks']:
         recommended['tracks'].remove(track_search)
-        
-    count = 0.05
-    while len(recommended['tracks']) != 20:
-        recommended = sp.recommendations(seed_artists=artists, seed_genres=genre, seed_tracks=tracks,
-                                         limit=20 - len(recommended['tracks']),
-                                         min_danceability=max(danceability - .15 - count, 0.01),
-                                         max_danceability=min(danceability + .15 + count, 0.99),
-                                         min_energy=max(energy - .15 - count, 0.01), max_energy=min(energy + .15 - count, 0.99),
-                                         min_valence=max(valence - .15 - count, 0.01),
-                                         max_valence=min(valence + .15 + count, 0.99),
-                                         min_popularity=max(popularity - 15 - int(count * 100), 1),
-                                         max_popularity=min(popularity + 15 + int(count * 100), 99))
-        if track_search in recommended['tracks']:
-            recommended['tracks'].remove(track_search)
-        count = count + 0.05
+
     return recommended
 
 

@@ -7,12 +7,13 @@ import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from main import get_top_tracks, recommendation, get_mood, save_top_tracks, save_recs, search_track
+from client import cid, secret
 
 app = Flask(__name__)
 
 app.secret_key = 'SOMETHING-RANDOM'
-cid = os.getenv('cid')
-secret = os.getenv('secret')
+#cid = os.getenv('cid')
+#secret = os.getenv('secret')
 app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
 
 def create_spotify_oauth():

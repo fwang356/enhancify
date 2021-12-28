@@ -210,36 +210,6 @@ input:focus {
     font-size: 22px;
 }
 
-svg {
-    display: block;
-    margin: auto;
-}
-
-.dataviz {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    vertical-align: top;
-    overflow: hidden;
-}
-
-.svg {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    vertical-align: top;
-    overflow: hidden;
-}
-
-.svg-content-responsive {
-    display: inline-block;
-    position: absolute;
-    top: 10px;
-    left: 0;
-}
-
 .container#search-again {
     padding-bottom: 2%;
 }

@@ -24,11 +24,6 @@
 <section class="" id="tracks">
     <div class="container h-100 pt-5" id="graph">
         <div class="row mt-2">
-            <div class="col-10 offset-1" id="graph">  
-                <div class='dataviz' id="my_dataviz"></div> 
-            </div>
-        </div>
-        <div class="row mt-2">
             <div class="col-10 offset-1">
                 <h4>
                     Recommendations
@@ -87,77 +82,4 @@
     </div>
 </section>
 <div id="mood" data='{{ data }}'></div>
-<script>
-
-
-var mood = document.getElementById("mood").getAttribute('data');
-var data = JSON.parse(mood);
-
-
-var margin = {top: 10, right: window.innerWidth / 20, bottom: 40, left: window.innerWidth / 20},
-width = window.innerWidth / 2- margin.left - margin.right,
-height = window.innerHeight / 3 - margin.top - margin.bottom;
-
-var svg = d3.select("#my_dataviz").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .attr("viewBox", [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom], preserveAspectRatio="xMaxYMax meet")
-    .append("g")
-    .attr("transform",
-        "translate(" + margin.left + "," + margin.top + ")")
-    .classed("svg-content-responsive", true);
-
-var x = d3.scaleLinear()
-    .domain([0, 100])
-    .range([ 0, width]);
-svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x))
-    .selectAll("text")
-    .attr("transform", "translate(-10,0)rotate(-45)")
-    .style("text-anchor", "end");
-        
-var y = d3.scaleBand()
-    .range([ 0, height ]) 
-    .domain(data.map(function(d) { return d.name.substring(0,1); }))
-    .padding(1);
-svg.append("g")
-    .call(d3.axisLeft(y))
-    .style("font", "14px Lato")
-        
-svg.selectAll("myline")
-    .data(data)
-    .enter()
-    .append("line")
-        .attr("x1", x(0))
-        .attr("x2", x(0))
-        .attr("y1", function(d) { return y(d.name.substring(0,1)); })
-        .attr("y2", function(d) { return y(d.name.substring(0,1)); })
-        .attr("stroke", "#d1d1ff")
-        .style("stroke-width", 3)
-
-svg.selectAll("mycircle")
-    .data(data)
-    .enter()
-    .append("circle")
-        .attr("cx", x(0))
-        .attr("cy", function(d) { return y(d.name.substring(0,1)); })
-        .attr("r", "8")
-        .style("fill", "#d1d1ff")
-        .attr("stroke", "#d1d1ff")
-        .style("stroke-width", 1)
-
-svg.selectAll("circle")
-    .transition()
-    .duration(1500)
-    .attr("cx", function(d) {return x(d.score); })
-    
-svg.selectAll("line")
-    .transition()
-    .duration(1500)
-    .attr("x1", function(d) {return x(d.score); })
-
-</script>
-
-</script>
 {%endblock%}

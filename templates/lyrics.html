@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head%}
+<nav class="navbar navbar-custom", action="/top-tracks/short-term">
+    <a class="navbar-brand" href="/top-tracks/short-term">
+        moodi
+    </a>
+</nav>
+<h4 style= "text-align: center;">
+    {{ track_name }}
+    <h5 style= "text-align: center;">
+        by {{ track_artist }}
+    </h5>
+    <br>
+    <h5 style= "text-align: center;">
+        Sentiment Rating: {{score}}
+    </h5>
+</h4>
+{%endblock%}
+
+{% block body%}
+
+<section class="" id="tracks">
+    <div class="container h-100 pt-2" id="graph">
+        <div class="row mt-2">
+            <div class="col-10 offset-1">
+                <div class="text-center">
+                    <form method= 'POST', action="/recs/">
+                        <button type="submit", name= "recs", class="btn btn-custom-solid", id="lyrics" value="{{track_id}}">
+                            Audio Analysis and Similar Songs
+                        </button>
+                    </form>
+                </div>
+                <h4 style = "text-align: center">
+                    Lyrics
+                </h4>   
+                <div class="text-center" style = "font-size: 20px">
+                    {% set length = lyric|length %}
+                    {% for i in range(length) %}
+                    {{lyric[i]}}
+                    <br>
+                    {% endfor %}
+                </div>
+                
+                <br>
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}

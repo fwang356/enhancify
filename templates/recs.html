@@ -13,7 +13,7 @@
     </h5>
     <br>
     <h5 style= "text-align: center;">
-        Danceability (D): {{ mood[0]['score'] }} &nbsp;&nbsp; Valence (V): {{ mood[1]['score'] }} &nbsp;&nbsp;  Energy (E): {{ mood[2]['score'] }}
+        Danceability: {{ mood[0]['score'] }} &nbsp;&nbsp; Valence: {{ mood[1]['score'] }} &nbsp;&nbsp;  Energy: {{ mood[2]['score'] }}
 
     </h5>
 </h4>
@@ -22,9 +22,20 @@
 {% block body%}
 
 <section class="" id="tracks">
-    <div class="container h-100 pt-5" id="graph">
+    <div class="container h-100 pt-2" id="graph">
         <div class="row mt-2">
             <div class="col-10 offset-1">
+                <div class="text-center">
+                    {% set title_length = track_name|length %}
+                    {% set string_length = title_length|string %}
+                    {% set my_string = '' %}
+                    {% set my_string = my_string + track_id + string_length + track_name + track_artist %}
+                    <form method= 'POST', action="/lyrics/">
+                        <button type="submit", name= "lyrics", class="btn btn-custom-solid", id="lyrics", value="{{my_string}}">
+                            View Lyrics
+                        </button>
+                    </form>
+                </div>
                 <h4>
                     Recommendations
                     {% if logged_in %}

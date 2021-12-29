@@ -7,13 +7,14 @@ import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from main import get_top_tracks, recommendation, get_mood, save_top_tracks, save_recs, search_track
+from nlp import lyrics, clean, analyze
 from client import cid, secret
 
 app = Flask(__name__)
 
 app.secret_key = 'SOMETHING-RANDOM'
-#cid = os.getenv('cid')
-#secret = os.getenv('secret')
+cid = os.getenv('cid')
+secret = os.getenv('secret')
 app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
 
 def create_spotify_oauth():
@@ -193,6 +194,21 @@ def search():
     query = request.form['search']
     results = search_track(query, sp)
     return render_template('search.html', sp=sp, results=results, query=query)
+
+
+@app.route('/lyrics/', methods=['GET', 'POST'])
+def view_lyrics():
+    if request.method == "POST":
+        string = request.form['lyrics']
+        track_id = string[0:22]
+        length = int(string[22])
+        track_name = string[23:length + 23]
+        track_artist = string[length + 23:]
+        lyric = lyrics(track_name, track_artist)
+        cleaned = clean(lyric[len(lyric) - 1])
+        score = analyze(cleaned)
+        return render_template('lyrics.html', track_id = track_id, track_name = track_name, track_artist = track_artist,
+                                lyric = lyric[0:len(lyric)-1], score = score)
 
 if __name__ == "__main__":
     app.run(debug=True)

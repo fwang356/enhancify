@@ -1,14 +1,11 @@
 import lyricsgenius
 import nltk
-from langdetect import detect
 from deep_translator import GoogleTranslator
 from nltk.sentiment import SentimentIntensityAnalyzer
-from client import gcid, gsecret, token
 
-genius = lyricsgenius.Genius(token)
+genius = lyricsgenius.Genius('twk9aMNXtiEl_zGc1rA9fd1eLJ_OWmd0owpsntBsLQyq2QYKKoPTMMM-Sh5V2ENK')
 stopwords = nltk.corpus.stopwords.words("english")
 sia = SentimentIntensityAnalyzer()
-
 
 def lyrics(title, artist):
     song = genius.search_song(title, artist)
@@ -24,7 +21,15 @@ def lyrics(title, artist):
         string = string[0:length - 1]
         length -= 1
     
-    return string
+    phrases = string.split('\n')
+    phrases.append(string)
+
+    for i in range(1, len(phrases)):
+        if phrases[i] != '' and phrases[i][0] == '[' and phrases[i][len(phrases[i]) - 1] == ']':
+            if phrases[i-1] != '':
+                phrases.insert(i, '')
+    
+    return phrases
 
 
 def clean(string):    
@@ -53,4 +58,4 @@ def analyze(lyrics):
 
     score = total/len(lyrics) + 1
     score *= 50
-    return score
+    return round(score)

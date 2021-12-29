@@ -52,7 +52,9 @@ def recommendation(track, sp):
     if len(genre) > 3:
         genre = genre[0:3]
     elif len(genre) < 3:
-        artists.append(sp.artist_related_artists(artist_id)['artists'][0]['id'])
+        related_artists = sp.artist_related_artists(artist_id)
+        if len(related_artists['artists']) > 0:
+            artists.append(related_artists['artists'][0]['id'])
 
     danceability = track_analysis[0]['danceability']
     energy = track_analysis[0]['energy']

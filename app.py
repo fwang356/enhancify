@@ -131,7 +131,7 @@ def recs():
             rec_tracks.append(recs['tracks'][i]['id'])
         rec_tracks = list(set(rec_tracks))
         print(logged_in)
-        return render_template('recs.html', sp=sp, lyric = lyric, rec_tracks=rec_tracks, recs=recs, track_id=track_id,
+        return render_template('recs.html', sp=sp, lyric = lyric[len(lyric) - 1], rec_tracks=rec_tracks, recs=recs, track_id=track_id,
                                 track_name=track_name, track_artist=track_artist, mood=mood, data=mood_string, logged_in=logged_in)
 
 

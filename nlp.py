@@ -63,8 +63,3 @@ def analyze(lyrics):
     score = total/len(lyrics) + 1
     score *= 50
     return round(score)
-
-lyrics = lyrics("Enchanted", "Taylor Swift")
-cleaned = clean(lyrics[len(lyrics)-1])
-score = analyze(cleaned)
-print(score)

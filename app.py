@@ -122,6 +122,8 @@ def recs():
         track_id = request.form['recs']
         track_name = sp.track(track_id)['name']
         track_artist = sp.track(track_id)['artists'][0]['name']
+        print(track_name)
+        print(track_artist)
         mood = get_mood(track_id, sp)
         mood_string = json.dumps(mood)
         recs = recommendation(track_id, sp)

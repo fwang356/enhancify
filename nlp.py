@@ -33,6 +33,8 @@ def lyrics(title, artist):
 
 
 def clean(string):    
+    if string == "Not Found":
+        return string
     string = string.replace('[', "1")
     string = string.replace(']', "1")
 
@@ -52,6 +54,8 @@ def clean(string):
 
 
 def analyze(lyrics):
+    if lyrics == "Not Found":
+        return 0
     total = 0
     for phrase in lyrics:
         total += sia.polarity_scores(phrase)["compound"]

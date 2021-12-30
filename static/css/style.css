@@ -24,10 +24,23 @@ head, body, html {
     background-color: #d1d1ff;
     color: #242336;
     border-color:#d1d1ff;
-    border-radius: 7px;
     border-radius: 20px;
     box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
     font-size: 13px;
+}
+
+.btn-custom-solid#lyrics {
+    font-size: 22px;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+}
+
+.btn-custom-solid#lyrics:hover {
+    transform: scale(1.07);
+}
+
+.text-center {
+    text-align: center;
 }
 
 .btn-custom-solid:hover {
@@ -145,7 +158,6 @@ h4{
     background-color: #d1d1ff;
     color: #242336;
     border-color:#d1d1ff;
-    border-radius: 7px;
     border-radius: 20px;
     margin-bottom: 0px;
     box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);

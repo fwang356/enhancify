@@ -8,7 +8,7 @@ import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from main import get_top_tracks, recommendation, get_mood, save_top_tracks, save_recs, search_track
 from nlp import lyrics, clean, analyze
-from client import cid, secret
+#from client import cid, secret
 
 app = Flask(__name__)
 
@@ -126,11 +126,12 @@ def recs():
         mood_string = json.dumps(mood)
         recs = recommendation(track_id, sp)
         rec_tracks = []
+        lyric = lyrics(track_name, track_artist)
         for i in range(len(recs['tracks'])):
             rec_tracks.append(recs['tracks'][i]['id'])
         rec_tracks = list(set(rec_tracks))
         print(logged_in)
-        return render_template('recs.html', sp=sp, rec_tracks=rec_tracks, recs=recs, track_id=track_id,
+        return render_template('recs.html', sp=sp, lyric = lyric, rec_tracks=rec_tracks, recs=recs, track_id=track_id,
                                 track_name=track_name, track_artist=track_artist, mood=mood, data=mood_string, logged_in=logged_in)
 
 
@@ -200,10 +201,11 @@ def search():
 def view_lyrics():
     if request.method == "POST":
         string = request.form['lyrics']
-        track_id = string[0:22]
-        length = int(string[22])
-        track_name = string[23:length + 23]
-        track_artist = string[length + 23:]
+        track_id = string[1:23]
+        length_length = int(string[0])
+        length = int(string[23:23 + length_length])
+        track_name = string[23+length_length:length + length_length + 23]
+        track_artist = string[length + 23 + length_length:]
         lyric = lyrics(track_name, track_artist)
         cleaned = clean(lyric[len(lyric) - 1])
         score = analyze(cleaned)

@@ -29,12 +29,16 @@
                     {% set title_length = track_name|length %}
                     {% set string_length = title_length|string %}
                     {% set my_string = '' %}
-                    {% set my_string = my_string + track_id + string_length + track_name + track_artist %}
+                    {% set length_length = string_length|length %}
+                    {% set length_length = length_length|string %}
+                    {% set my_string = my_string + length_length + track_id + string_length + track_name + track_artist %}
+                    {% if lyric != "Not Found" %}
                     <form method= 'POST', action="/lyrics/">
                         <button type="submit", name= "lyrics", class="btn btn-custom-solid", id="lyrics", value="{{my_string}}">
                             View Lyrics
                         </button>
                     </form>
+                    {% endif %}
                 </div>
                 <h4>
                     Recommendations

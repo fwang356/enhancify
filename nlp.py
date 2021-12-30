@@ -1,5 +1,7 @@
 import lyricsgenius
 import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
 from deep_translator import GoogleTranslator
 from nltk.sentiment import SentimentIntensityAnalyzer
 
@@ -63,3 +65,8 @@ def analyze(lyrics):
     score = total/len(lyrics) + 1
     score *= 50
     return round(score)
+
+lyrics = lyrics("Enchanted", "Taylor Swift")
+cleaned = clean(lyrics[len(lyrics)-1])
+score = analyze(cleaned)
+print(score)

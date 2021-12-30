@@ -2,6 +2,7 @@ import lyricsgenius
 import nltk
 nltk.download('stopwords')
 nltk.download('punkt')
+nltk.download('vader_lexicon')
 from deep_translator import GoogleTranslator
 from nltk.sentiment import SentimentIntensityAnalyzer
 

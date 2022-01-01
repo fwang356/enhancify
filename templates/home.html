@@ -1,18 +1,26 @@
 {% extends "base.html" %}
 
 {% block head%}
-<h1 style="text-align: center"> moodi </h1>
+
 {%endblock%}
 
 {% block body%}
-<div style="text-align: center">
-    <h2 style="text-align: center">Login to Access Your Personalized Listening Analysis</h2>
-    <form action="/" method='POST'>
-        <button action='/' type="submit", class="btn btn-custom", name='login' value='login'>
-            Login With Spotify
-        </button>
-    </form>
-    <br>
-    
+<div class="home" style="text-align: center">
+    <div class="container h-100 pt-5">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <h1 style="text-align: center"> moodi </h1>
+                <h2 style="text-align: center">Login to Access Your Personalized Listening Analysis</h2>
+                <br>
+                <form action="/" method='POST'>
+                    <button action='/' type="submit", class="btn btn-custom", name='login' value='login'>
+                        Login With Spotify
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+
 </div>
 {%endblock%}

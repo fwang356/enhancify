@@ -24,7 +24,7 @@
 <section class="" id="tracks">
     <div class="container h-100 pt-2" id="graph">
         <div class="row mt-2">
-            <div class="col-10 offset-1">
+            <div class="col-12" align="center">
                 <div class="text-center">
                     {% set title_length = track_name|length %}
                     {% set string_length = title_length|string %}
@@ -51,15 +51,13 @@
                     {% endif %}
                 </h4>    
                 {% set length = recs['tracks'] | length %}
-                {% set length = (length / 2) | int %}
-                {% for i in range(length) %}
-                    {% set count = (loop.index - 1) * 2 %}
+                {% for count in range(length) %}
                     <div class="card-deck">
                         <div class="card">
                             <a class="img_link" href="{{ recs['tracks'][count]['external_urls']['spotify'] }}">
                                 <img class="card-img" src= "{{recs['tracks'][count]['album']['images'][0]['url']}}">     
                             </a>
-                            <div class="card-body">
+                            <div class="card-body" align="left">
                                 <h5>{{count + 1}}. {{ recs['tracks'][count]['name'] }}</h5>
                                 <small>By {{ recs['tracks'][count]['artists'][0]['name'] }}</small>
                                 <br>
@@ -70,24 +68,6 @@
                                         Audio Analysis and Similar Songs
                                     </button>
                                 </form>
-                            </div>
-                        {% set count = count + 1%}
-                        </div>
-                        <div class="card">
-                            <a class="img_link" href="{{ recs['tracks'][count]['external_urls']['spotify'] }}">
-                                <img class="card-img" src= "{{recs['tracks'][count]['album']['images'][0]['url']}}">     
-                            </a>
-                            <div class="card-body">
-                                <h5>{{count + 1}}. {{ recs['tracks'][count]['name'] }}</h5>
-                                <small>By {{ recs['tracks'][count]['artists'][0]['name'] }}</small>
-                                <br>
-                                <br>
-                                <br>
-                                <form method= 'POST', action="/recs/">
-                                    <button type="submit", name= "recs", class="btn btn-custom-solid", value="{{ recs['tracks'][count]['id'] }}", action= "/recs/">
-                                        Audio Analysis and Similar Songs
-                                    </button>
-                                </form> 
                             </div>
                         </div>
                     </div>

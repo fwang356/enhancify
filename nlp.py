@@ -1,3 +1,4 @@
+from unittest import IsolatedAsyncioTestCase
 import lyricsgenius
 import nltk
 from deep_translator import GoogleTranslator
@@ -39,7 +40,6 @@ def clean(string):
     string = string.replace(']', "1")
 
     string = GoogleTranslator(source="auto", target="en").translate(string)
-
     lyrics = string.split('\n')
     
     for i in range(len(lyrics)):
@@ -49,6 +49,8 @@ def clean(string):
         lyrics[i] = ' '.join(lyrics[i])
     
     lyrics = [phrase for phrase in lyrics if phrase != '']
+    if lyrics[-1][len(lyrics[-1]) - 4: len(lyrics[-1])] == "Embe":
+        lyrics[-1] = lyrics[-1][0:len(lyrics[-1]) -4]
 
     return lyrics
 
@@ -57,9 +59,13 @@ def analyze(lyrics):
     if lyrics == "Not Found":
         return 0
     total = 0
+    count = 0
     for phrase in lyrics:
-        total += sia.polarity_scores(phrase)["compound"]
+        compound = sia.polarity_scores(phrase)["compound"]
+        if compound != 0:
+            total += compound
+            count += 1
 
-    score = total/len(lyrics) + 1
+    score = total/count + 1
     score *= 50
     return round(score)
